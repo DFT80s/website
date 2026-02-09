@@ -9,6 +9,7 @@
  **   aria-label="View linked page"
  **   size="large"
  **   pill
+ **   slanted
  ** >
  **   <span slot="label">More Info</span>
  ** </x-button>
@@ -51,6 +52,11 @@ componentStyles.replaceSync(`
     :host([pill]) a,
     :host([pill]) button {
         --bdr-rd: 10rem;
+    }
+
+    :host([slanted]) a,
+    :host([slanted]) button {
+        clip-path: polygon(0.6rem 0, 100% 0, calc(100% - 0.6rem) 100%, 0% 100%);
     }
 
     .small {
@@ -194,6 +200,7 @@ class ButtonComponent extends HTMLElement {
             'external',
             'target',
             'rel',
+            'slanted',
         ];
     }
 

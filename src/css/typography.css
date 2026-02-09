@@ -92,6 +92,7 @@ h6 {
 
 strong {
     font-weight: var(--fw-semibold);
+    color: var(--dark-clr);
 }
 
 /* Link styles */
