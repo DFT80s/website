@@ -157,8 +157,8 @@ class ThemeToggleComponent extends HTMLElement {
 
     // Initialize theme based on saved preference or default
     initializeTheme() {
-        // Load saved theme preference or default to light
-        const savedTheme = localStorage.getItem('theme') || 'light';
+        // Load saved theme preference or default to dark
+        const savedTheme = localStorage.getItem('theme') || 'dark';
         this.setTheme(savedTheme);
         this.#checkbox.checked = savedTheme === 'dark';
 

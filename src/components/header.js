@@ -21,7 +21,7 @@ class HeaderComponent extends HTMLElement {
         this.innerHTML = `
             <header class="site-header">
                 <div class="header-left">
-                    <x-logo></x-logo>
+                    <x-logo height="75" link="/"></x-logo>
                 </div>
                 <div class="header-right">
                     <x-primary-nav></x-primary-nav>

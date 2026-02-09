@@ -4,7 +4,7 @@
 
 /* Changes the color when users highlight/select text */
 ::selection {
-    background-color: var(--primary-clr);
+    background-color: var(--secondary-clr);
     color: var(--white-clr-fxd);
 }
 

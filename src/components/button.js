@@ -83,6 +83,7 @@ componentStyles.replaceSync(`
         line-height: 1;
         text-decoration: none;
         font-size: var(--fs);
+        font-family: var(--header-font, sans-serif);
         font-weight: var(--fw-semibold, 500);
         letter-spacing: 0.025rem;
         padding: var(--pd);

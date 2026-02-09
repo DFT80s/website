@@ -23,13 +23,13 @@ class FooterComponent extends HTMLElement {
                 <div class="footer-left">
                     <x-current-year
                         prepend="© "
-                        append=" Company Name. All rights reserved."
+                        append=" Don’t Forget The Eighties. All rights reserved."
                     ></x-current-year>
                     <div class="footer-social">
-                        <a href="https://meta.com/yourusername" aria-label="Meta" target="_blank" rel="noopener noreferrer">
+                        <a href="https://meta.com/dft80s" aria-label="Meta" target="_blank" rel="noopener noreferrer">
                             <x-icon name="meta" size="20"></x-icon>
                         </a>
-                        <a href="https://x.com/yourusername" aria-label="X" target="_blank" rel="noopener noreferrer">
+                        <a href="https://x.com/dft80s" aria-label="X" target="_blank" rel="noopener noreferrer">
                             <x-icon name="x" size="16"></x-icon>
                         </a>
                     </div>
