@@ -1,16 +1,17 @@
 /*
  ** Responsive Image Component with Cloudinary
  **
- ** Supports 3 modes:
+ ** Automatically uses Cloudinary if VITE_CLOUDINARY_CLOUD_NAME env variable is set.
+ ** Falls back to original URLs if env variable is not present.
+ **
+ ** Supports 2 modes:
  ** 1. Direct Cloudinary upload (filename attribute)
- ** 2. Cloudinary fetch from external URL (src attribute with user/env)
- ** 3. Fallback to original URL (src attribute without Cloudinary)
+ ** 2. External image URL with optional Cloudinary fetch (src attribute)
  **
  ** Usage Examples:
  **
- ** <!-- Direct Cloudinary upload -->
+ ** <!-- Direct Cloudinary upload (requires env variable) -->
  ** <x-image
- **   user="your-cloud"
  **   filename="sample.jpg"
  **   width="1792"
  **   height="1108"
@@ -18,27 +19,17 @@
  **   ar="true"
  ** ></x-image>
  **
- ** <!-- WordPress/External image with Cloudinary fetch + fallback -->
+ ** <!-- External image URL (uses Cloudinary if env set) -->
  ** <x-image
  **   src="https://example.com/wp-content/uploads/image.jpg"
- **   user="your-cloud"
  **   width="1920"
  **   height="1080"
  **   alt="Blog post image"
  ** ></x-image>
  **
- ** <!-- External image without Cloudinary (direct fallback) -->
- ** <x-image
- **   src="https://example.com/image.jpg"
- **   width="800"
- **   height="600"
- **   alt="External image"
- ** ></x-image>
- **
  ** Attributes:
- ** - user: Cloudinary cloud name (falls back to VITE_CLOUDINARY_CLOUD_NAME env var)
- ** - filename: Filename for direct Cloudinary uploads
- ** - src: External image URL (triggers fetch mode or fallback mode)
+ ** - filename: Filename for direct Cloudinary uploads (requires VITE_CLOUDINARY_CLOUD_NAME)
+ ** - src: External image URL (optimized via Cloudinary if env variable exists)
  ** - width: Image width in pixels
  ** - height: Image height in pixels
  ** - alt: Alt text for accessibility
@@ -52,7 +43,6 @@ class ImageComponent extends HTMLElement {
     // Observe attributes
     static get observedAttributes() {
         return [
-            'user',
             'filename',
             'src',
             'width',
@@ -123,10 +113,7 @@ class ImageComponent extends HTMLElement {
 
     // Render the <picture> element with responsive srcset and sizes
     render() {
-        const user =
-            this.getAttribute('user') ||
-            import.meta.env.VITE_CLOUDINARY_CLOUD_NAME ||
-            '';
+        const cloudinaryUser = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || '';
         const filename = this.getAttribute('filename') || '';
         const src = this.getAttribute('src') || '';
         const width = this.getAttribute('width') || '1792';
@@ -137,15 +124,16 @@ class ImageComponent extends HTMLElement {
         const decoding = this.getAttribute('decoding') || 'async';
         const ar = this.getAttribute('ar') === 'true';
 
-        // Determine rendering mode
-        const isDirectUpload = filename && !src;
-        const isFetch = src && user;
-        const isFallbackOnly = src && !user;
+        // Determine rendering mode based on env variable and attributes
+        const hasCloudinary = !!cloudinaryUser;
+        const isDirectUpload = hasCloudinary && filename && !src;
+        const isFetch = hasCloudinary && src;
+        const isFallbackOnly = !hasCloudinary && src;
 
         let pictureHTML = '';
 
         if (isDirectUpload) {
-            // Mode 1: Direct Cloudinary upload (existing behavior)
+            // Mode 1: Direct Cloudinary upload
             pictureHTML = `
                 <picture>
                     <source
@@ -153,10 +141,14 @@ class ImageComponent extends HTMLElement {
                         srcset="
                             ${
                                 ar
-                                    ? this.cloudinaryUrl(user, 640, filename)
+                                    ? this.cloudinaryUrl(
+                                          cloudinaryUser,
+                                          640,
+                                          filename,
+                                      )
                                     : this.withAspectRatio(
                                           this.cloudinaryUrl(
-                                              user,
+                                              cloudinaryUser,
                                               640,
                                               filename,
                                           ),
@@ -165,10 +157,14 @@ class ImageComponent extends HTMLElement {
                             } 640w,
                             ${
                                 ar
-                                    ? this.cloudinaryUrl(user, 768, filename)
+                                    ? this.cloudinaryUrl(
+                                          cloudinaryUser,
+                                          768,
+                                          filename,
+                                      )
                                     : this.withAspectRatio(
                                           this.cloudinaryUrl(
-                                              user,
+                                              cloudinaryUser,
                                               768,
                                               filename,
                                           ),
@@ -181,14 +177,14 @@ class ImageComponent extends HTMLElement {
                     <source
                         media="(min-width: 768px)"
                         srcset="
-                            ${this.cloudinaryUrl(user, 1024, filename)} 1024w,
-                            ${this.cloudinaryUrl(user, 1280, filename)} 1280w,
-                            ${this.cloudinaryUrl(user, 1792, filename)} 1792w
+                            ${this.cloudinaryUrl(cloudinaryUser, 1024, filename)} 1024w,
+                            ${this.cloudinaryUrl(cloudinaryUser, 1280, filename)} 1280w,
+                            ${this.cloudinaryUrl(cloudinaryUser, 1792, filename)} 1792w
                         "
                         sizes="80vw"
                     >
                     <img
-                        src="${this.cloudinaryUrl(user, 1792, filename)}"
+                        src="${this.cloudinaryUrl(cloudinaryUser, 1792, filename)}"
                         width="${width}"
                         height="${height}"
                         alt="${alt}"
@@ -210,22 +206,22 @@ class ImageComponent extends HTMLElement {
                     <source
                         media="(max-width: 767px)"
                         srcset="
-                            ${this.cloudinaryFetchUrl(user, 640, src)} 640w,
-                            ${this.cloudinaryFetchUrl(user, 768, src)} 768w
+                            ${this.cloudinaryFetchUrl(cloudinaryUser, 640, src)} 640w,
+                            ${this.cloudinaryFetchUrl(cloudinaryUser, 768, src)} 768w
                         "
                         sizes="100vw"
                     >
                     <source
                         media="(min-width: 768px)"
                         srcset="
-                            ${this.cloudinaryFetchUrl(user, 1024, src)} 1024w,
-                            ${this.cloudinaryFetchUrl(user, 1280, src)} 1280w,
-                            ${this.cloudinaryFetchUrl(user, 1792, src)} 1792w
+                            ${this.cloudinaryFetchUrl(cloudinaryUser, 1024, src)} 1024w,
+                            ${this.cloudinaryFetchUrl(cloudinaryUser, 1280, src)} 1280w,
+                            ${this.cloudinaryFetchUrl(cloudinaryUser, 1792, src)} 1792w
                         "
                         sizes="80vw"
                     >
                     <img
-                        src="${this.cloudinaryFetchUrl(user, 1792, src)}"
+                        src="${this.cloudinaryFetchUrl(cloudinaryUser, 1792, src)}"
                         data-fallback="${escapedSrc}"
                         width="${width}"
                         height="${height}"
@@ -238,7 +234,7 @@ class ImageComponent extends HTMLElement {
                 </picture>
             `;
         } else if (isFallbackOnly) {
-            // Mode 3: No Cloudinary optimization, use original URL
+            // Mode 3: No Cloudinary env variable, use original URL
             const escapedSrc = src
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#39;');
