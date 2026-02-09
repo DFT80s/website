@@ -1,0 +1,26 @@
+/* ========================================== */
+/* User interaction stylesheet */
+/* ========================================== */
+
+/* Changes the color when users highlight/select text */
+::selection {
+    background-color: var(--primary-clr);
+    color: var(--white-clr-fxd);
+}
+
+/*  Applies outline to ALL interactive elements when focused */
+:is(a, button, input, select, textarea, summary):focus {
+    outline: 0.125rem solid var(--primary-clr);
+    outline-offset: 0.125rem;
+}
+
+/*  Triggers on mouse click OR keyboard navigation */
+:is(a, button, input, select, textarea, summary):focus-visible {
+    outline: 0.125rem solid var(--primary-clr);
+    outline-offset: 0.125rem;
+}
+
+/* Hide outline when not keyboard-focused */
+:is(a, button, input, select, textarea, summary):focus:not(:focus-visible) {
+    outline: none;
+}

@@ -1,0 +1,76 @@
+/* ========================================== */
+/* Animations stylesheet */
+/* ========================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+    /* Parallax Bg */
+    @keyframes parallaxBg {
+        from {
+            transform: translateY(-20%);
+        }
+        to {
+            transform: translateY(20%);
+        }
+    }
+
+    @supports (animation-range: cover) and (animation-timeline: view()) {
+        section:has(> .parallax-bg),
+        article:has(> .parallax-bg),
+        div:has(> .parallax-bg) {
+            overflow: clip;
+            position: relative;
+
+            > :not(.parallax-bg) {
+                position: relative;
+            }
+
+            .parallax-bg {
+                position: absolute;
+                inset: 0;
+                margin: auto;
+                height: 120% !important;
+                width: 100%;
+                animation: parallaxBg linear both;
+                animation-timeline: view(block);
+                animation-range: cover;
+                animation-duration: 1ms;
+
+                img,
+                video {
+                    height: 100%;
+                    width: 100%;
+                    inset: 0;
+                    margin: auto;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+
+    /* Fade in */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 100%;
+        }
+    }
+
+    /* Sroll fade */
+    .scroll-fade {
+        animation: fadeIn linear both;
+        animation-timeline: view();
+        animation-range-start: cover;
+        animation-range-end: 50vh;
+        opacity: 0;
+    }
+}
+
+/* Disable transitions during theme selection */
+.disable-transitions {
+    --clr-trans: none;
+    --bg-clr-trans: none;
+    --bdr-clr-trans: none;
+    --bx-shdw-trans: none;
+}

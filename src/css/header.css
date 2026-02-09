@@ -1,0 +1,50 @@
+/* ========================================== */
+/* Header stylesheet */
+/* ========================================== */
+
+x-header {
+    width: min(100%, var(--mx-wdth));
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding-block: 0.4rem;
+    margin-inline: auto;
+    background-color: var(--white-clr);
+    border-bottom: 0.0625rem solid var(--light-clr);
+}
+
+header {
+    grid-column: breakout;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    > * {
+        flex-shrink: 0;
+    }
+}
+
+.header-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.header-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+x-theme-toggle {
+    line-height: 0;
+}
+
+@media (max-width: 767px) {
+    x-primary-nav {
+        order: 2;
+    }
+}

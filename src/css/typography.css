@@ -1,0 +1,240 @@
+/* ========================================== */
+/* Typography stylesheet */
+/* ========================================== */
+
+/* Global variables */
+:root {
+    --body-font:
+        -apple-system, BlinkMacSystemFont, ‘Segoe UI’, Roboto, Helvetica, Arial,
+        sans-serif, ‘Apple Color Emoji’, ‘Segoe UI Emoji’, ‘Segoe UI Symbol’;
+    --header-font: var(--body-font);
+
+    --fs-xxl: clamp(2.25rem, 5vw + 1rem, 3rem);
+    --fs-xl: 2.25rem;
+    --fs-lg: 1.5rem;
+    --fs-md: 1.25rem;
+    --fs-std: 1rem;
+    --fs-sm: 0.875rem;
+    --fs-xs: 0.75rem;
+
+    --f-lh: 1.5;
+    --h-lh: 1.2;
+
+    --fw-light: 300;
+    --fw-normal: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+}
+
+/*-----------------------------------------------------------
+-- Body styles
+-----------------------------------------------------------*/
+body {
+    font-family: var(--body-font);
+    font-weight: var(--fw-light);
+    font-size: var(--fs-std);
+    line-height: var(--f-lh);
+    color: var(--font-clr);
+}
+
+/*-----------------------------------------------------------
+-- Header styles
+-----------------------------------------------------------*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--header-font);
+    font-weight: var(--fw-semibold);
+    line-height: var(--h-lh);
+    color: var(--header-clr);
+    text-wrap: balance;
+}
+
+.hero-txt {
+    font-size: var(--fs-xxl);
+    font-weight: var(--fw-bold);
+}
+
+.title-txt {
+    font-size: var(--fs-xl);
+    font-weight: var(--fw-bold);
+}
+
+.stndfrst-txt {
+    font-size: var(--fs-md);
+    font-weight: var(--fw-normal);
+}
+
+h1 {
+    font-size: var(--fs-xl);
+}
+
+h2 {
+    font-size: var(--fs-lg);
+}
+
+h3 {
+    font-size: var(--fs-md);
+}
+
+h4,
+h5,
+h6 {
+    font-size: var(--fs-std);
+}
+
+strong {
+    font-weight: var(--fw-semibold);
+}
+
+/* Link styles */
+a {
+    color: var(--primary-clr);
+    text-decoration: none;
+    font-weight: var(--fw-medium);
+}
+
+.txt-flw {
+    a:not(:has(> img)):not(h1 a, h2 a, h3 a, h4 a, h5 a, h6 a):not(x-button) {
+        color: var(--primary-clr);
+        text-decoration: transparent solid underline 0.07rem;
+        text-underline-offset: 0em;
+        font-weight: var(--fw-medium);
+        padding: 0.2rem 0.4rem;
+        background-color: light-dark(
+            oklch(from var(--primary-clr) l c h / 0.1),
+            oklch(from var(--white-clr-fxd) l c h / 0.1)
+        );
+        border-radius: 0.3rem;
+        cursor: pointer;
+        word-wrap: break-word;
+        transition:
+            text-decoration 0.1s linear,
+            text-underline-offset 0.1s linear;
+
+        &:hover {
+            color: var(--primary-clr);
+            text-decoration: var(--primary-clr) solid underline 0.07rem;
+            text-underline-offset: 0.24em;
+        }
+
+        &:active {
+            text-underline-offset: 0.24em;
+            background-color: light-dark(
+                oklch(from var(--primary-clr) l c h / 0.2),
+                oklch(from var(--white-clr-fxd) l c h / 0.17)
+            );
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+}
+
+/* Spacing */
+.txt-flw {
+    --flow-spacer: 1rem;
+
+    > * + * {
+        margin-top: var(--flow-spacer, 1rem);
+    }
+
+    > x-button {
+        margin-block: var(--flow-spacer, 1rem);
+        margin-top: calc(var(--flow-spacer, 1rem) * 1.75);
+    }
+}
+
+/* List styles */
+ul,
+ol {
+    list-style-position: outside;
+    padding: 0;
+
+    li {
+        padding: 0 0 0.2rem 0;
+
+        &::marker {
+            color: var(--font-clr);
+        }
+
+        &:has(strong) {
+            &::marker {
+                font-weight: var(font-weight-semibold);
+            }
+        }
+    }
+
+    ul,
+    ol {
+        padding: 0rem 0 0 1.6rem;
+    }
+
+    li {
+        > ul,
+        > ol {
+            padding-top: 0.2rem;
+        }
+    }
+
+    li:last-child {
+        padding-bottom: 0;
+    }
+}
+
+ol {
+    list-style-position: outside;
+    padding: 0 0 0 1.6rem;
+    counter-reset: lv1Style;
+
+    > li {
+        counter-increment: lv1Style;
+
+        &::marker {
+            content: '[' counter(lv1Style, list-item) ']  ';
+        }
+
+        &:has(strong) {
+            &::marker {
+                font-weight: var(--fw-medium);
+            }
+        }
+
+        > ol {
+            counter-reset: lv2Style;
+
+            > li {
+                counter-increment: lv2Style;
+
+                &::marker {
+                    content: '[' counter(lv2Style, lower-alpha) ']  ';
+                }
+
+                > ol {
+                    counter-reset: lv3Style;
+
+                    > li {
+                        counter-increment: lv3Style;
+
+                        &::marker {
+                            content: '[' counter(lv3Style, lower-roman) ']  ';
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+ul:not(ul ul):not(ol ul) {
+    margin-left: 1.3rem;
+}
+
+ol:not(ol ol):not(ul ol) {
+    margin-left: 0.2rem;
+}

@@ -1,0 +1,174 @@
+/* ========================================== */
+/* Blog Card Component stylesheet */
+/* Styles the blog card component ./blog-card.js */
+/* ========================================== */
+
+:host {
+    display: block;
+}
+
+.post-card {
+    display: flex;
+    flex-direction: column;
+    border: 0.0625rem solid var(--light-clr, #ececec);
+    background-color: var(--white-clr-fxd, #ffffff);
+    border-radius: var(--bdr-rds, 2rem);
+    overflow: clip;
+    height: 100%;
+    max-width: 26rem;
+    margin-inline: auto;
+
+    h2 {
+        font-size: var(--fs-lg, 1.5rem);
+
+        a {
+            color: var(--header-clr, #000000);
+            font-weight: var(--fw-semibold);
+            text-decoration: none;
+            transition: var(--clr-trans, 0.15s color ease-in-out);
+            will-change: color;
+
+            &:hover {
+                color: var(--primary-clr, #1cade8);
+            }
+        }
+    }
+}
+
+.post-thumbnail {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1.618 / 1;
+    object-fit: cover;
+}
+
+.post-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.8rem;
+    flex: 1;
+}
+
+.post-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: center;
+}
+
+.post-meta {
+    color: color-mix(in oklch, var(--grey-clr, #afafaf), var(--black-clr) 20%);
+    font-size: var(--fs-sm, 0.875rem);
+}
+
+.post-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.category-pill {
+    padding: 0.2rem 0.75rem;
+    border-radius: 10rem;
+    background-color: var(--light-clr, #ececec);
+    color: var(--black-clr, #000000);
+    font-size: var(--fs-xs, 0.75rem);
+    text-decoration: none;
+    font-weight: var(--fw-medium);
+    transition:
+        var(--bg-trans, background-color 0.15s ease-in-out),
+        var(--clr-trans, color 0.15s ease-in-out);
+    will-change: background-color, color;
+
+    &:hover {
+        background-color: var(--primary-clr, #1cade8);
+        color: var(--white-clr-fxd, #ffffff);
+    }
+}
+
+.post-excerpt {
+    flex: 1;
+    margin-bottom: 0.4rem;
+    color: var(--font-clr);
+}
+
+.post-footer {
+    border-top: 0.0625rem solid var(--light-clr, #ececec);
+    padding-top: 1.4rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: center;
+}
+
+.post-author {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.4rem;
+    align-items: start;
+    min-width: 0;
+
+    x-icon {
+        translate: 0 0.1rem;
+        color: color-mix(
+            in oklch,
+            var(--grey-clr, #afafaf),
+            var(--black-clr) 20%
+        );
+    }
+
+    span {
+        min-width: 0;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        font-size: var(--fs-sm);
+        color: var(--font-clr);
+    }
+}
+
+x-button {
+    align-self: flex-end;
+}
+
+/* Theme overrides */
+:host-context([data-theme='dark']) .post-card {
+    border-color: var(--light-clr, #232323);
+    background-color: oklch(15% 0 271);
+
+    h2 {
+        a {
+            color: var(--white-clr-fxd, #ffffff);
+
+            &:hover {
+                color: var(--primary-clr, #1cade8);
+            }
+        }
+    }
+}
+
+:host-context([data-theme='dark']) .category-pill {
+    background-color: oklch(25% 0 271);
+    color: var(--white-clr-fxd, #ffffff);
+
+    &:hover {
+        background-color: var(--primary-clr, #1cade8);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    @media (hover: hover) {
+        .post-card {
+            transition:
+                var(--bdr-clr-trans, border-color 0.15s ease-in-out),
+                var(--bx-shdw-trans, box-shadow 0.15s);
+            will-change: border-color, box-shadow;
+
+            &:hover {
+                border-color: var(--primary-clr, #1cade8);
+                box-shadow: 0 0.25rem 0.75rem
+                    oklch(from var(--header-clr) l c h / 0.15);
+            }
+        }
+    }
+}

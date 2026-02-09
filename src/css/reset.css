@@ -1,0 +1,50 @@
+/* ========================================== */
+/* Reset stylesheet */
+/* ========================================== */
+
+/* Makes sizing simpler */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default spacing */
+/* Force styling of type through styling, rather than elements */
+* {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+}
+
+html {
+    /* Improves punctuation in supported browsers */
+    hanging-punctuation: first last;
+    /* Allows you to enable animations and transitions between a <length-percentage> value and an intrinsic size value such as auto, fit-content, or max-content. */
+    interpolate-size: allow-keywords;
+}
+
+/* Min body height */
+body {
+    min-height: 100svh;
+}
+
+/* Responsive images/videos */
+picture,
+svg,
+video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    font-style: italic;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    shape-margin: 2rem;
+}

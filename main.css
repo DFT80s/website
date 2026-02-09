@@ -1,0 +1,33 @@
+/* ========================================== */
+/* Main Stylesheet */
+/* ========================================== */
+
+/* Establish layers */
+@layer reset, framework, base, layout, page, utilities, components;
+
+/* Import reset styles into reset layer */
+@import './src/css/reset.css' layer(reset);
+
+/* Import variables into base layer */
+@import './src/css/variables.css' layer(base);
+
+/* Import typography styles into base layer */
+@import './src/css/typography.css' layer(base);
+
+/* Import animations styles into base layer */
+@import './src/css/animations.css' layer(base);
+
+/* Import events styles into base layer */
+@import './src/css/events.css' layer(base);
+
+/* Import layout styles into layout layer */
+@import './src/css/layout.css' layer(layout);
+
+/* Import header styles into layout layer */
+@import './src/css/header.css' layer(page);
+
+/* Import footer styles into layout layer */
+@import './src/css/footer.css' layer(page);
+
+/* Import utilities styles into utilities layer */
+@import './src/css/utilities.css' layer(utilities);

@@ -1,0 +1,70 @@
+/* ========================================== */
+/* Variables stylesheet */
+/* ========================================== */
+
+/* Global variables */
+:root {
+    /* Cache bust version */
+    --cache-bust-version: 1;
+
+    /* Colour scheme */
+    color-scheme: light dark;
+
+    /* Colours */
+    --primary-clr: light-dark(oklch(70.4% 0.14 233), oklch(70.4% 0.14 233));
+
+    --white-clr: light-dark(oklch(100% 0 0), oklch(0% 0 0));
+    --black-clr: light-dark(oklch(0% 0 0), oklch(100% 0 0));
+    --white-clr-fxd: oklch(100% 0 0);
+    --black-clr-fxd: oklch(0% 0 0);
+
+    --font-clr: light-dark(oklch(44.5% 0.04 257), oklch(89.5% 0 271));
+    --header-clr: light-dark(oklch(30% 0.04 254), oklch(100% 0 0));
+
+    --grey-clr: light-dark(oklch(80% 0.04 257), oklch(43% 0 271));
+    --grey-clr-fxd: oklch(80% 0.04 257);
+    --light-clr: light-dark(oklch(95% 0.01 256), oklch(23% 0 271));
+    --light-clr-fxd: oklch(95% 0.01 256);
+
+    --error-clr: light-dark(oklch(46% 0.2 28), oklch(65% 0.2 25));
+    --warning-clr: light-dark(oklch(60% 0.12 75), oklch(90% 0.16 75));
+    --success-clr: light-dark(oklch(53% 0.16 145), oklch(85% 0.16 145));
+
+    /* Accent colour */
+    accent-color: var(--primary-clr);
+
+    /* Layout */
+    --mx-wdth: 1792px;
+    --bdr-rds: clamp(1.6rem, 4vw, 2.2rem);
+    --asp-r: 1.618 / 1;
+
+    /* Transitions */
+    --clr-trans: color 0.15s ease-in-out;
+    --bg-clr-trans: background-color 0.15s ease-in-out;
+    --bdr-clr-trans: border-color 0.15s ease-in-out;
+    --bx-shdw-trans: box-shadow 0.15s ease-in-out;
+}
+
+/* Reduced motion overrides */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        /* Transitions */
+        --clr-trans: none;
+        --bg-clr-trans: none;
+        --bdr-clr-trans: none;
+        --bx-shdw-trans: none;
+    }
+}
+
+/* Contrast overrides */
+@media (prefers-contrast: more) {
+    :root {
+        /* Colours */
+        --primary-clr: light-dark(oklch(60% 0.12 232), oklch(70.4% 0.14 233));
+    }
+}
+
+/* Dark mode overrides */
+[data-theme='dark'] {
+    color-scheme: dark;
+}

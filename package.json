@@ -1,0 +1,21 @@
+{
+    "name": "web-components",
+    "private": true,
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "dev:netlify": "netlify dev",
+        "build": "vite build && node scripts/generate-sitemap.js",
+        "build:vite": "vite build",
+        "sitemap": "node scripts/generate-sitemap.js",
+        "preview": "vite preview"
+    },
+    "devDependencies": {
+        "netlify-cli": "^23.13.3",
+        "vite": "^7.2.4"
+    },
+    "dependencies": {
+        "dompurify": "^3.3.1"
+    }
+}

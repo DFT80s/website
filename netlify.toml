@@ -1,0 +1,98 @@
+# Build settings
+[build]
+  publish = "dist"
+  command = "npm run build"
+  functions = "netlify/functions"
+  edge_functions = "netlify/edge-functions"
+
+# Edge Functions
+[[edge_functions]]
+  function = "category-meta"
+  path = "/blog/c/*"
+
+[[edge_functions]]
+  function = "blog-meta"
+  path = "/blog/*"
+
+[[edge_functions]]
+  function = "social-meta"
+  path = "/*"
+  excludedPath = "/404"
+
+# Sitemap Index - main sitemap that references sub-sitemaps
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/.netlify/functions/sitemap-index"
+  status = 200
+
+# Blog sitemap - dynamic blog content
+[[redirects]]
+  from = "/sitemap-blog.xml"
+  to = "/.netlify/functions/sitemap"
+  status = 200
+
+# Blog post routing - rewrite clean URLs to post template (must come first, before .html redirect)
+[[redirects]]
+  from = "/blog/:slug"
+  to = "/blog/post.html?slug=:slug"
+  status = 200
+  force = true
+
+# Blog category routing - rewrite category URLs
+[[redirects]]
+  from = "/blog/c/:category"
+  to = "/blog/category.html?cat=:category"
+  status = 200
+  force = true
+
+# Redirect .html to clean URLs (301 permanent redirect)
+# Exclude /blog/post.html from this rule since it's handled above
+[[redirects]]
+  from = "/*.html"
+  to = "/:splat"
+  status = 301
+  force = true
+  conditions = { NOT = "/blog/post.html" }
+
+# Redirect all unmatched routes to 404.html with a 404 status for custom error handling
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+# Security Headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Resource-Policy = "same-origin"
+    Permissions-Policy = "microphone=(), camera=(), geolocation=(), payment=(), publickey-credentials-get=()"
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://amplify-creative.com; font-src 'self'; frame-src 'none'; media-src 'self' https://res.cloudinary.com https://amplify-creative.com; worker-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; form-action 'self'; upgrade-insecure-requests;"
+
+# Netlify Functions cache headers
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Cache-Control = "public, s-maxage=3600, stale-while-revalidate=86400"
+
+# Cache static assets (Vite generates hashed filenames)
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
