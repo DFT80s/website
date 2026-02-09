@@ -79,6 +79,8 @@ class ImageComponent extends HTMLElement {
                         '[x-image] Cloudinary failed, using fallback URL',
                     );
                     this.currentImg.src = fallback;
+                    // Remove data-fallback to prevent infinite loop
+                    this.currentImg.removeAttribute('data-fallback');
                 }
             }
         };
