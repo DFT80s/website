@@ -52,6 +52,23 @@
     --bg-clr-trans: background-color 0.15s ease-in-out;
     --bdr-clr-trans: border-color 0.15s ease-in-out;
     --bx-shdw-trans: box-shadow 0.15s ease-in-out;
+
+    /* Glow effect */
+    --glow:
+        0 0 0.14em oklch(from currentColor l c h / 0.15),
+        0 0 0.56em oklch(from currentColor l c h / 0.15),
+        0 0 0.83em oklch(from currentColor l c h / 0.15);
+    --primary-glow:
+        0 0 0.14em oklch(from var(--primary-clr) l c h / 0.15),
+        0 0 0.56em oklch(from var(--primary-clr) l c h / 0.15),
+        0 0 0.83em oklch(from var(--primary-clr) l c h / 0.15);
+    --secondary-glow:
+        0 0 0.14em oklch(from var(--secondary-clr) l c h / 0.15),
+        0 0 0.56em oklch(from var(--secondary-clr) l c h / 0.15),
+        0 0 0.83em oklch(from var(--secondary-clr) l c h / 0.15);
+
+    /* Theme */
+    --button-shadow: var(--primary-glow);
 }
 
 /* Reduced motion overrides */
@@ -69,11 +86,45 @@
 @media (prefers-contrast: more) {
     :root {
         /* Colours */
-        --primary-clr: light-dark(oklch(60% 0.12 232), oklch(70.4% 0.14 233));
+        --primary-clr: light-dark(
+            color-mix(
+                in oklch,
+                oklch(61.57% 0.26 355.13),
+                var(--black-clr-fxd, #000000ff) 10%
+            ),
+            oklch(61.57% 0.26 355.13)
+        );
+        --secondary-clr: light-dark(
+            color-mix(
+                in oklch,
+                oklch(70.8% 0.149 234.4),
+                var(--black-clr-fxd, #000000ff) 10%
+            ),
+            oklch(70.8% 0.149 234.4)
+        );
     }
 }
 
-/* Dark mode overrides */
+/* Dark theme overrides */
 [data-theme='dark'] {
     color-scheme: dark;
+
+    /* Glow effect */
+    --glow:
+        0 0 0.14em oklch(from currentColor l c h / 0.6),
+        0 0 0.56em oklch(from currentColor l c h / 0.6),
+        0 0 0.83em oklch(from currentColor l c h / 0.6);
+    --primary-glow:
+        0 0 0.14em oklch(from var(--primary-clr) l c h / 0.6),
+        0 0 0.56em oklch(from var(--primary-clr) l c h / 0.6),
+        0 0 0.83em oklch(from var(--primary-clr) l c h / 0.6);
+    --secondary-glow:
+        0 0 0.14em oklch(from var(--secondary-clr) l c h / 0.6),
+        0 0 0.56em oklch(from var(--secondary-clr) l c h / 0.6),
+        0 0 0.83em oklch(from var(--secondary-clr) l c h / 0.6);
+}
+
+/* Light theme overrides */
+[data-theme='light'] {
+    color-scheme: light;
 }

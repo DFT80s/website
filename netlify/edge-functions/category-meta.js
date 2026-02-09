@@ -124,6 +124,12 @@ export default async (request, context) => {
         const hasDescriptionTag = descMatch !== null;
         const existingDescription = descMatch ? descMatch[1].trim() : '';
 
+        // Check if canonical tag exists
+        const canonicalMatch = html.match(
+            /<link\s+rel="canonical"\s+href="([^"]*)"/i,
+        );
+        const hasCanonicalTag = canonicalMatch !== null;
+
         // Check for existing author and publisher meta tags
         const authorMatch = html.match(
             /<meta\s+name="author"\s+content="([^"]*)"/i,
@@ -190,6 +196,9 @@ export default async (request, context) => {
         const needsDescriptionInjection =
             !hasDescriptionTag || !existingDescription;
 
+        // Determine if we need to inject canonical tag
+        const needsCanonicalInjection = !hasCanonicalTag;
+
         // Determine if we need to inject author and publisher tags
         const needsAuthorInjection = !hasAuthorTag || !existingAuthor;
         const needsPublisherInjection = !hasPublisherTag || !existingPublisher;
@@ -234,6 +243,10 @@ export default async (request, context) => {
         transformedHtml = transformedHtml.replace(
             '</head>',
             `${wpResourceLinks}${cloudinaryLinks}${
+                needsCanonicalInjection
+                    ? `\n                    <link rel="canonical" href="${cleanUrl}">`
+                    : ''
+            }${
                 needsDescriptionInjection
                     ? `\n                    <meta name="description" content="${safeDescription}">`
                     : ''

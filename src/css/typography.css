@@ -84,6 +84,12 @@ h3 {
     font-size: var(--fs-md);
 }
 
+h1,
+h2,
+h3 {
+    text-shadow: var(--secondary-glow);
+}
+
 h4,
 h5,
 h6 {

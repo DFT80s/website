@@ -97,6 +97,7 @@ componentStyles.replaceSync(`
         border-radius: var(--bdr-rd);
         background-color: var(--fill-clr);
         border: 0.125rem var(--fill-clr) solid;
+        box-shadow: var(--button-shadow, none);
     }
 
     svg {

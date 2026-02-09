@@ -234,9 +234,15 @@ export default async (request, context) => {
 
         // Insert social meta tags and JSON-LD right before </head>
         // Always replace og:url and twitter:url with canonical URL (handles empty ones too)
+
+        // Inject canonical tag if it doesn't exist in the HTML
+        const canonicalTag = !canonicalMatch
+            ? `<link rel="canonical" href="${canonicalUrl}">\n        `
+            : '';
+
         let transformedHtml = html.replace(
             '</head>',
-            `${wpResourceLinks}${cloudinaryLinks}${socialMeta}\n    </head>`,
+            `${wpResourceLinks}${cloudinaryLinks}${canonicalTag}${socialMeta}\n    </head>`,
         );
 
         // Update the title tag with full title including site name
