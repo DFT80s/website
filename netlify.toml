@@ -73,7 +73,7 @@
     Cross-Origin-Resource-Policy = "same-origin"
     Permissions-Policy = "microphone=(), camera=(), geolocation=(), payment=(), publickey-credentials-get=()"
     Cache-Control = "public, max-age=0, must-revalidate"
-    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://amplify-creative.com; font-src 'self'; frame-src 'none'; media-src 'self' https://res.cloudinary.com https://amplify-creative.com; worker-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; form-action 'self'; upgrade-insecure-requests;"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://dft80s.netlify.app https://dft80s.band; font-src 'self'; frame-src 'none'; media-src 'self' https://res.cloudinary.com https://dft80s.netlify.app https://dft80s.band; worker-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; form-action 'self'; upgrade-insecure-requests;"
 
 # Netlify Functions cache headers
 [[headers]]
