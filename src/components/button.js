@@ -10,6 +10,7 @@
  **   size="large"
  **   pill
  **   slanted
+ **   align="right"
  ** >
  **   <span slot="label">More Info</span>
  ** </x-button>
@@ -42,6 +43,18 @@ componentStyles.replaceSync(`
         --bdr-rd: 0;
         --fs: var(--fs-std, 1rem);
         --pd: 0.5rem .75rem 0.5rem 1rem;
+    }
+
+    :host([align="center"]) {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    :host([align="right"]) {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
     }
 
     :host([round]) a,
@@ -202,6 +215,7 @@ class ButtonComponent extends HTMLElement {
             'target',
             'rel',
             'slanted',
+            'align',
         ];
     }
 

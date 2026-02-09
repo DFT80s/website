@@ -29,8 +29,21 @@
         <template id="page">
             <x-header class="c-grid"></x-header>
             <main aria-label="Error page">
-                <section class="c-grid sec-pd txt-flw">
+                <section class="c-grid sec-pd narrow txt-flw ta-c">
                     <h1>Page not found</h1>
+                    <p>
+                        We are sorry but the page you are looking for could not
+                        be found. Please check the URL or return to our
+                        homepage.
+                    </p>
+                    <x-button
+                        href="/"
+                        aria-label="Return to homepage"
+                        align="center"
+                        slanted
+                    >
+                        Return home
+                    </x-button>
                 </section>
             </main>
             <x-footer class="c-grid"></x-footer>

@@ -101,6 +101,15 @@ strong {
     color: var(--dark-clr);
 }
 
+/* Alignment */
+.ta-c {
+    text-align: center;
+}
+
+.ta-r {
+    text-align: right;
+}
+
 /* Link styles */
 a {
     color: var(--primary-clr);
