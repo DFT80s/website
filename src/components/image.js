@@ -1,16 +1,18 @@
 /*
  ** Responsive Image Component with Cloudinary
  **
- ** Automatically uses Cloudinary if VITE_CLOUDINARY_CLOUD_NAME env variable is set.
- ** Falls back to original URLs if env variable is not present.
- **
- ** Supports 2 modes:
+ ** Supports 3 modes based on environment variables and attributes:
  ** 1. Direct Cloudinary upload (filename attribute)
- ** 2. External image URL with optional Cloudinary fetch (src attribute)
+ ** 2. Cloudinary fetch (src with external URL, OR src with local path when VITE_IMAGE_URL_BASE is set)
+ ** 3. Direct image URL without Cloudinary optimization (src with local path, no VITE_IMAGE_URL_BASE)
+ **
+ ** Environment Variables:
+ ** - VITE_CLOUDINARY_CLOUD_NAME: Enables Cloudinary optimization
+ ** - VITE_IMAGE_URL_BASE: When set, enables Cloudinary fetch for local/relative paths
  **
  ** Usage Examples:
  **
- ** <!-- Direct Cloudinary upload (requires env variable) -->
+ ** <!-- Mode 1: Direct Cloudinary upload -->
  ** <x-image
  **   filename="sample.jpg"
  **   width="1792"
@@ -19,7 +21,7 @@
  **   ar="true"
  ** ></x-image>
  **
- ** <!-- External image URL (uses Cloudinary if env set) -->
+ ** <!-- Mode 2: External image with Cloudinary fetch -->
  ** <x-image
  **   src="https://example.com/wp-content/uploads/image.jpg"
  **   width="1920"
@@ -27,9 +29,25 @@
  **   alt="Blog post image"
  ** ></x-image>
  **
+ ** <!-- Mode 2: Local image with Cloudinary fetch (requires VITE_IMAGE_URL_BASE set) -->
+ ** <x-image
+ **   src="social.jpg"
+ **   width="1792"
+ **   height="1008"
+ **   alt="Local image optimized by Cloudinary"
+ ** ></x-image>
+ **
+ ** <!-- Mode 3: Local image without Cloudinary (VITE_IMAGE_URL_BASE not set) -->
+ ** <x-image
+ **   src="/images/photo.jpg"
+ **   width="800"
+ **   height="600"
+ **   alt="Direct local image"
+ ** ></x-image>
+ **
  ** Attributes:
  ** - filename: Filename for direct Cloudinary uploads (requires VITE_CLOUDINARY_CLOUD_NAME)
- ** - src: External image URL (optimized via Cloudinary if env variable exists)
+ ** - src: Image URL (external or local path)
  ** - width: Image width in pixels
  ** - height: Image height in pixels
  ** - alt: Alt text for accessibility
@@ -114,6 +132,7 @@ class ImageComponent extends HTMLElement {
     // Render the <picture> element with responsive srcset and sizes
     render() {
         const cloudinaryUser = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || '';
+        const imageUrlBase = import.meta.env.VITE_IMAGE_URL_BASE || '';
         const filename = this.getAttribute('filename') || '';
         const src = this.getAttribute('src') || '';
         const width = this.getAttribute('width') || '1792';
@@ -126,9 +145,15 @@ class ImageComponent extends HTMLElement {
 
         // Determine rendering mode based on env variable and attributes
         const hasCloudinary = !!cloudinaryUser;
+        const isExternalUrl =
+            src && (src.startsWith('http://') || src.startsWith('https://'));
+        // Use Cloudinary fetch for external URLs, or local paths when VITE_IMAGE_URL_BASE is set
+        const shouldUseFetch =
+            hasCloudinary && src && (isExternalUrl || !!imageUrlBase);
+
         const isDirectUpload = hasCloudinary && filename && !src;
-        const isFetch = hasCloudinary && src;
-        const isFallbackOnly = !hasCloudinary && src;
+        const isFetch = shouldUseFetch;
+        const isFallbackOnly = src && !shouldUseFetch;
 
         let pictureHTML = '';
 
@@ -197,6 +222,16 @@ class ImageComponent extends HTMLElement {
             `;
         } else if (isFetch) {
             // Mode 2: Cloudinary fetch with fallback to original URL
+            // For local paths, prepend VITE_IMAGE_URL_BASE to create a full URL
+            let fullSrc = src;
+            if (!isExternalUrl) {
+                // Ensure proper path joining with single slash
+                const base = imageUrlBase.endsWith('/')
+                    ? imageUrlBase.slice(0, -1)
+                    : imageUrlBase;
+                const path = src.startsWith('/') ? src : `/${src}`;
+                fullSrc = `${base}${path}`;
+            }
             const escapedSrc = src
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#39;');
@@ -206,22 +241,22 @@ class ImageComponent extends HTMLElement {
                     <source
                         media="(max-width: 767px)"
                         srcset="
-                            ${this.cloudinaryFetchUrl(cloudinaryUser, 640, src)} 640w,
-                            ${this.cloudinaryFetchUrl(cloudinaryUser, 768, src)} 768w
+                            ${this.cloudinaryFetchUrl(cloudinaryUser, 640, fullSrc)} 640w,
+                            ${this.cloudinaryFetchUrl(cloudinaryUser, 768, fullSrc)} 768w
                         "
                         sizes="100vw"
                     >
                     <source
                         media="(min-width: 768px)"
                         srcset="
-                            ${this.cloudinaryFetchUrl(cloudinaryUser, 1024, src)} 1024w,
-                            ${this.cloudinaryFetchUrl(cloudinaryUser, 1280, src)} 1280w,
-                            ${this.cloudinaryFetchUrl(cloudinaryUser, 1792, src)} 1792w
+                            ${this.cloudinaryFetchUrl(cloudinaryUser, 1024, fullSrc)} 1024w,
+                            ${this.cloudinaryFetchUrl(cloudinaryUser, 1280, fullSrc)} 1280w,
+                            ${this.cloudinaryFetchUrl(cloudinaryUser, 1792, fullSrc)} 1792w
                         "
                         sizes="80vw"
                     >
                     <img
-                        src="${this.cloudinaryFetchUrl(cloudinaryUser, 1792, src)}"
+                        src="${this.cloudinaryFetchUrl(cloudinaryUser, 1792, fullSrc)}"
                         data-fallback="${escapedSrc}"
                         width="${width}"
                         height="${height}"
@@ -234,7 +269,7 @@ class ImageComponent extends HTMLElement {
                 </picture>
             `;
         } else if (isFallbackOnly) {
-            // Mode 3: No Cloudinary env variable, use original URL
+            // Mode 3: Direct image URL without Cloudinary optimization
             const escapedSrc = src
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#39;');
