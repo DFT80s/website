@@ -54,7 +54,7 @@
     --bx-shdw-trans: box-shadow 0.15s ease-in-out;
 
     /* Gradients */
-    --grad: linear-gradient(to right, var(--primary-clr), var(--secondary-clr));
+    --grad: linear-gradient(150deg, var(--primary-clr), var(--secondary-clr));
 
     /* Glow effect */
     --glow:
