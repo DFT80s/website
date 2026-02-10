@@ -20,6 +20,10 @@ x-theme-toggle {
 .menu-toggle {
     position: relative;
     background-color: var(--primary-clr);
+    filter: drop-shadow(
+        0 0 0.6em
+            light-dark(transparent, oklch(from var(--primary-clr) l c h / 0.8))
+    );
     padding: 0rem;
     border: none;
     aspect-ratio: 1 / 1;

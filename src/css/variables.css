@@ -56,20 +56,6 @@
     /* Gradients */
     --grad: linear-gradient(130deg, var(--primary-clr), var(--secondary-clr));
 
-    /* Glow effect */
-    --glow:
-        0 0 0.14em oklch(from currentColor l c h / 0.15),
-        0 0 0.56em oklch(from currentColor l c h / 0.15),
-        0 0 0.83em oklch(from currentColor l c h / 0.15);
-    --primary-glow:
-        0 0 0.14em oklch(from var(--primary-clr) l c h / 0.15),
-        0 0 0.56em oklch(from var(--primary-clr) l c h / 0.15),
-        0 0 0.83em oklch(from var(--primary-clr) l c h / 0.15);
-    --secondary-glow:
-        0 0 0.14em oklch(from var(--secondary-clr) l c h / 0.15),
-        0 0 0.56em oklch(from var(--secondary-clr) l c h / 0.15),
-        0 0 0.83em oklch(from var(--secondary-clr) l c h / 0.15);
-
     /* Theme */
     --button-shadow: var(--primary-glow);
 }

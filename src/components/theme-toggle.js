@@ -48,6 +48,7 @@ componentStyles.replaceSync(`
 
     input[type="checkbox"]:checked {
         background-color: var(--secondary-clr, --primary-clr, #1cade8);
+        filter: drop-shadow(0 0 0.6em light-dark(transparent, oklch(from var(--secondary-clr, --primary-clr, #1cade8) l c h / 0.8)));
     }
 
     input[type="checkbox"]::before {
