@@ -30,7 +30,7 @@ class FooterComponent extends HTMLElement {
                             <x-icon name="meta" size="20"></x-icon>
                         </a>
                         <a href="https://x.com/dft80s" aria-label="X" target="_blank" rel="noopener noreferrer">
-                            <x-icon name="x" size="16"></x-icon>
+                            <x-icon name="x" size="14"></x-icon>
                         </a>
                     </div>
                 </div>

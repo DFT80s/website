@@ -47,7 +47,7 @@ componentStyles.replaceSync(`
     }
 
     input[type="checkbox"]:checked {
-        background-color: var(--primary-clr, #1cade8);
+        background-color: var(--secondary-clr, --primary-clr, #1cade8);
     }
 
     input[type="checkbox"]::before {
