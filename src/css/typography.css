@@ -57,6 +57,30 @@ h6 {
     text-wrap: balance;
 }
 
+h1 {
+    font-size: var(--fs-xl);
+}
+
+h2 {
+    font-size: var(--fs-lg);
+}
+
+h3 {
+    font-size: var(--fs-md);
+}
+
+h4,
+h5,
+h6 {
+    font-size: var(--fs-std);
+}
+
+strong {
+    font-weight: var(--fw-semibold);
+    color: var(--dark-clr);
+}
+
+/* Text styles */
 .hero-txt {
     font-size: var(--fs-xxl);
     font-weight: var(--fw-bold);
@@ -72,33 +96,20 @@ h6 {
     font-weight: var(--fw-normal);
 }
 
-h1 {
-    font-size: var(--fs-xl);
-}
-
-h2 {
-    font-size: var(--fs-lg);
-}
-
-h3 {
-    font-size: var(--fs-md);
-}
-
-h1,
-h2,
-h3 {
-    text-shadow: var(--secondary-glow);
-}
-
-h4,
-h5,
-h6 {
-    font-size: var(--fs-std);
-}
-
-strong {
-    font-weight: var(--fw-semibold);
-    color: var(--dark-clr);
+.grad-txt {
+    background: var(--grad);
+    background-blend-mode: screen;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    width: fit-content;
+    filter: drop-shadow(
+        0 0 0.3em
+            light-dark(
+                transparent,
+                oklch(from var(--secondary-clr) l c h / 0.6)
+            )
+    );
 }
 
 /* Alignment */

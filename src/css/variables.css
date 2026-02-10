@@ -53,6 +53,9 @@
     --bdr-clr-trans: border-color 0.15s ease-in-out;
     --bx-shdw-trans: box-shadow 0.15s ease-in-out;
 
+    /* Gradients */
+    --grad: linear-gradient(to right, var(--primary-clr), var(--secondary-clr));
+
     /* Glow effect */
     --glow:
         0 0 0.14em oklch(from currentColor l c h / 0.15),
