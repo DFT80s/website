@@ -56,11 +56,18 @@ class IconComponent extends HTMLElement {
         svg.setAttribute('height', size);
         svg.setAttribute('focusable', 'false'); // Prevent focus for accessibility
 
-        // Only hide from screen readers if no aria-label or aria-labelledby is set
-        if (
-            !this.hasAttribute('aria-label') &&
-            !this.hasAttribute('aria-labelledby')
-        ) {
+        // Transfer aria-label or aria-labelledby from component to SVG
+        if (this.hasAttribute('aria-label')) {
+            svg.setAttribute('role', 'img');
+            svg.setAttribute('aria-label', this.getAttribute('aria-label'));
+        } else if (this.hasAttribute('aria-labelledby')) {
+            svg.setAttribute('role', 'img');
+            svg.setAttribute(
+                'aria-labelledby',
+                this.getAttribute('aria-labelledby'),
+            );
+        } else {
+            // Hide from screen readers if no label provided (decorative)
             svg.setAttribute('aria-hidden', 'true');
         }
 
