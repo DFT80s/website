@@ -1,0 +1,60 @@
+/* ========================================== */
+/* Content stylesheet */
+/* ========================================== */
+
+main {
+    background-image: url('/images/grid-transparent.svg');
+    background-size: 1280px auto;
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-attachment: fixed;
+}
+/* Higlight icon */
+.highlight-icon {
+    color: var(--secondary-clr);
+    display: inline-block;
+    width: fit-content;
+    margin-inline: auto;
+}
+
+/* Call out */
+.call-out {
+    margin-inline: auto;
+    padding: 2rem;
+    backdrop-filter: blur(0.125rem);
+}
+
+/* Song list styles */
+.song-list {
+    list-style: none;
+    padding: 0;
+    margin: 2em auto;
+    li {
+        margin: 0.5em 0;
+        &::before {
+            content: '[';
+            font-size: 1.2em;
+            margin-right: 0.5em;
+            color: var(--primary-clr);
+        }
+        &::after {
+            content: ']';
+            font-size: 1.2em;
+            margin-left: 0.5em;
+            color: var(--primary-clr);
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    main {
+        background-size: 1792px auto;
+    }
+}
+
+/* Light theme overrides */
+[data-theme='light'] {
+    main {
+        background-image: url('/images/grid-transparent-light.svg');
+    }
+}

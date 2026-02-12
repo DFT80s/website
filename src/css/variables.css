@@ -26,7 +26,7 @@
     --black-clr-fxd: oklch(0% 0 0);
 
     --font-clr: light-dark(oklch(44.5% 0.04 257), oklch(89.5% 0 271));
-    --header-clr: var(--secondary-clr);
+    --header-clr: var(--dark-clr);
 
     --dark-clr: light-dark(oklch(24% 0.006 0.3), oklch(100% 0 0));
     --dark-clr-fxd: light-dark(oklch(24% 0.006 0.3), oklch(24% 0.006 0.3));

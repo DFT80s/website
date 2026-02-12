@@ -39,8 +39,6 @@ class FooterComponent extends HTMLElement {
                         <a href="/privacy">Privacy</a>
                         <span aria-hidden="true">|</span>
                         <a href="/cookies">Cookie</a>
-                        <span aria-hidden="true">|</span>
-                        <a href="/terms">Terms</a>
                     </div>
                 </div>
             </footer>

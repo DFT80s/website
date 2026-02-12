@@ -13,6 +13,7 @@ import './src/components/image.js';
 import './src/components/icon.js';
 import './src/components/button.js';
 import './src/components/grid.js';
+import './src/components/obscured-email.js';
 
 // Load saved theme before page renders
 const savedTheme = localStorage.getItem('theme') || 'light';

@@ -126,6 +126,29 @@ div:has(> .media-cover) {
     user-select: none;
 }
 
+/* Colours */
+.grad-bdr {
+    position: relative;
+    z-index: 1;
+    ::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: var(--bdr-rds);
+        padding: 0.125rem;
+        background: linear-gradient(
+            130deg,
+            var(--primary-clr),
+            var(--secondary-clr)
+        );
+        mask:
+            linear-gradient(#000 0 0) content-box,
+            linear-gradient(#000 0 0);
+        mask-composite: exclude;
+        z-index: -1;
+    }
+}
+
 /* 
 ** Performance
 ** Improve rendering performance for off-screen content

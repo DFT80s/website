@@ -67,11 +67,7 @@ class ObscuredEmailComponent extends HTMLElement {
 
         const email = `${user}@${domain}`;
 
-        this.shadowRoot.innerHTML = `
-            <a href="mailto:${email}" part="link" aria-label="Email ${user} at ${domain}">
-                ${iconHTML}${user}<span class="at">@</span>${domain}
-            </a>
-        `;
+        this.shadowRoot.innerHTML = `<a href="mailto:${email}" part="link" aria-label="Email ${user} at ${domain}">${iconHTML}${user}<span class="at">@</span>${domain}</a>`;
     }
 }
 

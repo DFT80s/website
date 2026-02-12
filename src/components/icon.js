@@ -54,8 +54,15 @@ class IconComponent extends HTMLElement {
         // Update SVG attributes
         svg.setAttribute('width', size);
         svg.setAttribute('height', size);
-        svg.setAttribute('aria-hidden', 'true'); // Hide from screen readers (decorative)
         svg.setAttribute('focusable', 'false'); // Prevent focus for accessibility
+
+        // Only hide from screen readers if no aria-label or aria-labelledby is set
+        if (
+            !this.hasAttribute('aria-label') &&
+            !this.hasAttribute('aria-labelledby')
+        ) {
+            svg.setAttribute('aria-hidden', 'true');
+        }
 
         // Insert SVG into component
         this.innerHTML = svg.outerHTML;

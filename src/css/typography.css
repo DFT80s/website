@@ -121,6 +121,16 @@ strong {
     text-align: right;
 }
 
+.grad-txt.ta-c,
+.ta-c .grad-txt {
+    margin-inline: auto;
+}
+
+.grad-txt.ta-r,
+.ta-r .grad-txt {
+    margin-right: 0;
+}
+
 /* Link styles */
 a {
     color: var(--primary-clr);

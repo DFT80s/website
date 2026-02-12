@@ -30,7 +30,7 @@
         <template id="page">
             <x-header class="c-grid"></x-header>
             <main aria-label="About us">
-                <section class="c-grid sec-pd txt-flw">
+                <section class="c-grid narrow sec-pd txt-flw ta-c">
                     <h1 class="grad-txt">About Don’t Forget The Eighties</h1>
                     <p>
                         <strong>Don’t Forget The Eighties</strong> are a
@@ -53,12 +53,28 @@
                         and many more. From new wave and ska to rock and
                         synth-pop, we’ve got the 80s covered.
                     </p>
+                    <x-image
+                        src="/images/about.jpg"
+                        alt="Don’t Forget The Eighties performing live, with a large crowd enjoying the music and dancing."
+                        width="1024"
+                        height="633"
+                        class="scroll-fade rnd-crnr"
+                    ></x-image>
                     <p>
                         If you’re looking for a fun, professional and
                         high-impact live band that knows how to work a crowd,
                         <strong>Don’t Forget The Eighties</strong> are your
                         go-to 80s tribute band in Hampshire, UK.
                     </p>
+                    <x-button
+                        href="/book-us"
+                        external="false"
+                        aria-label="View book us page"
+                        align="center"
+                        slanted
+                    >
+                        <span slot="label">Book Us</span>
+                    </x-button>
                 </section>
             </main>
             <x-footer class="c-grid"></x-footer>
