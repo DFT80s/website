@@ -2,6 +2,7 @@
 /* Content stylesheet */
 /* ========================================== */
 
+/* Main content styles */
 main {
     background-image: url('/images/grid-transparent.svg');
     background-size: 1280px auto;
@@ -9,6 +10,20 @@ main {
     background-position: top center;
     background-attachment: fixed;
 }
+
+/* Front page logo */
+.fp-logo {
+    width: fit-content;
+    margin-inline: auto;
+    height: auto;
+    svg {
+        height: auto !important;
+    }
+    #logo-grid {
+        opacity: 0;
+    }
+}
+
 /* Higlight icon */
 .highlight-icon {
     color: var(--secondary-clr);
