@@ -26,11 +26,11 @@ export default async (request, context) => {
         xml += `    <lastmod>${new Date().toISOString()}</lastmod>\n`;
         xml += '  </sitemap>\n';
 
-        // Add blog sitemap (dynamic, updated frequently)
-        xml += '  <sitemap>\n';
-        xml += `    <loc>${siteUrl}/sitemap-blog.xml</loc>\n`;
-        xml += `    <lastmod>${new Date().toISOString()}</lastmod>\n`;
-        xml += '  </sitemap>\n';
+        // // Add blog sitemap (dynamic, updated frequently)
+        // xml += '  <sitemap>\n';
+        // xml += `    <loc>${siteUrl}/sitemap-blog.xml</loc>\n`;
+        // xml += `    <lastmod>${new Date().toISOString()}</lastmod>\n`;
+        // xml += '  </sitemap>\n';
 
         xml += '</sitemapindex>';
 

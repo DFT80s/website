@@ -160,14 +160,14 @@ class PrimaryNavComponent extends HTMLElement {
 
                 <ul id="primary-nav-list" class="nav-list">
                     ${menuHTML}
-                    <li class="social-icons">
-                        <a href="https://meta.com/yourusername" aria-label="Meta" target="_blank" rel="noopener noreferrer">
+                    <!--<li class="social-icons">
+                        <a href="https://meta.com/dft80s" aria-label="Meta" target="_blank" rel="noopener noreferrer">
                             <x-icon name="meta" size="20"></x-icon>
                         </a>
-                        <a href="https://x.com/yourusername" aria-label="X" target="_blank" rel="noopener noreferrer">
+                        <a href="https://x.com/dft80s" aria-label="X" target="_blank" rel="noopener noreferrer">
                             <x-icon name="x" size="16"></x-icon>
                         </a>
-                    </li>
+                    </li>-->
                 </ul>
 
                 <div class="drawer-overlay" aria-hidden="true"></div>
