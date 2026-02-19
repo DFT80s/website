@@ -1,0 +1,105 @@
+# Don't Forget The Eighties - Website Documentation
+
+> llms-full.txt - Comprehensive information for AI assistants
+
+## Site Overview
+
+**Site Name**: Don't Forget The Eighties
+**Domain**: https://dft80s.band
+**Purpose**: Professional website for a high-energy 1980s tribute band based in South Hampshire, UK
+**Target Audience**: Event organizers, venues (pubs, clubs, festivals), private party hosts
+**Primary Goal**: Drive bookings for live performances across Hampshire and the South Coast
+
+## Business Information
+
+**Band Name**: Don't Forget The Eighties
+**Type**: Three-piece 1980s tribute band
+**Location**: South Hampshire, UK
+**Service Area**: Hampshire and the South Coast
+**Active Period**: Currently taking bookings for 2026
+
+### Performance Details
+- **Venues**: Pubs, clubs, festivals, and private parties
+- **Style**: High-energy live performances featuring iconic 80s hits
+- **Genre Coverage**: New wave, synth-pop, ska, rock, chart-topping pop
+- **Key Artists Covered**: Duran Duran, Spandau Ballet, Madness, The Police, The Jam, David Bowie, Talk Talk, New Order, Nik Kershaw, Thompson Twins, Def Leppard, Bon Jovi, and many more
+
+### Band Characteristics
+- Dynamic three-piece lineup
+- Crowd-pleasing sing-along anthems
+- Dancefloor-focused setlist
+- Professional and high-impact performances
+- Focus on recognizable 80s hits (no deep cuts)
+
+## Contact Information
+
+**Phone**: 07364 215157 (UK mobile, displays with spaces but links as +447364215157)
+**Email**: 80sbandinfo@gmail.com
+**Preferred Contact Method**: Email or phone for booking inquiries
+
+## Site Structure
+
+### Main Pages
+1. **Home** (`/` or `/index.html`)
+   - Hero section with band logo
+   - Tagline: "Hampshire's High-Energy 80s Tribute Band. Synth hooks. Sharp suits. Massive choruses."
+   - Call-to-action button to contact page
+   - Three-column feature section highlighting band strengths
+   - Booking availability notice
+
+2. **About** (`/about`)
+   - Band introduction and overview
+   - Setlist details and artist coverage
+   - Performance image
+   - Book Us call-to-action button
+
+3. **Media** (`/media`)
+   - Videos, photos, and live clips
+   - Visual showcase of performances
+   - Grid layout of media content
+
+4. **Contact Us** (`/contact-us`)
+   - Contact introduction text
+   - Phone number 
+   - Email address 
+   - Booking availability notice
+
+5. **Additional Pages**
+   - Privacy Policy (`/privacy`)
+   - Cookie Policy (`/cookies`)
+   - 404 Error Page (`/404.html`)
+
+### Sitemaps
+- Sitemap index at `/sitemap.xml`
+- Blog sitemap at `/sitemap-blog.xml`
+- Generated via serverless functions
+
+### Robots
+- `robots.txt` in `/public/` directory
+
+## Content Guidelines
+
+### Tone & Voice
+- Energetic and enthusiastic
+- Nostalgic but not overly retro
+- Professional yet approachable
+- Focus on crowd experience and dancefloor energy
+
+### Key Messaging
+- "Hampshire's High-Energy 80s Tribute Band"
+- Emphasis on recognizable hits and singalong anthems
+- Professional, crowd-pleasing performances
+- Geographic focus: Hampshire and South Coast
+
+### Content Themes
+- 80s nostalgia and authenticity
+- Live performance energy
+- Crowd engagement
+- Professional reliability
+- Venue versatility (pubs to festivals)
+
+---
+
+**Last Updated**: February 19, 2026
+**Maintained By**: Development team
+**Version**: 1.0.0
