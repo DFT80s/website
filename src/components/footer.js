@@ -25,14 +25,14 @@ class FooterComponent extends HTMLElement {
                         prepend="© "
                         append=" Don’t Forget The Eighties. All rights reserved."
                     ></x-current-year>
-                    <!--<div class="footer-social">
-                        <a href="https://meta.com/dft80s" aria-label="Meta" target="_blank" rel="noopener noreferrer">
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/share/1FAswXcV69/" aria-label="Meta" target="_blank" rel="noopener noreferrer">
                             <x-icon name="meta" size="20"></x-icon>
                         </a>
-                        <a href="https://x.com/dft80s" aria-label="X" target="_blank" rel="noopener noreferrer">
+                        <!--<a href="https://x.com/dft80s" aria-label="X" target="_blank" rel="noopener noreferrer">
                             <x-icon name="x" size="14"></x-icon>
-                        </a>
-                    </div>-->
+                        </a>-->
+                    </div>
                 </div>
                 <div class="footer-right">
                     <div class="footer-links">

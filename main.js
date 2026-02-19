@@ -14,6 +14,7 @@ import './src/components/icon.js';
 import './src/components/button.js';
 import './src/components/grid.js';
 import './src/components/obscured-email.js';
+import './src/components/phone.js';
 
 // Load saved theme before page renders
 const savedTheme = localStorage.getItem('theme') || 'light';
@@ -42,7 +43,7 @@ const app = () => {
             { label: 'Home', url: '/' },
             { label: 'About', url: '/about' },
             { label: 'Media', url: '/media' },
-            { label: 'Book Us', url: '/book-us' },
+            { label: 'Contact', url: '/contact-us' },
         ];
     }
 };

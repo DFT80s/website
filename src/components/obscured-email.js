@@ -19,19 +19,20 @@ componentStyles.replaceSync(`
 
     x-icon {
         color: inherit;
-        margin-right: 0.25rem;
+        margin-right: 0.4rem;
         display: inline-flex;
         vertical-align: middle;
+        translate: 0 -0.0625rem;
     }
 
     a {
         color: inherit;
-        text-decoration: underline;
+        text-decoration: none;
         cursor: pointer;
     }
 
     a:hover {
-        text-decoration: none;
+        text-decoration: underline;
     }
         
     .at {
