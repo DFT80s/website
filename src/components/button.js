@@ -8,6 +8,7 @@
  **   variant="outline"
  **   aria-label="View linked page"
  **   size="large"
+ **   type="submit"
  **   pill
  **   slanted
  **   align="right"
@@ -214,6 +215,7 @@ class ButtonComponent extends HTMLElement {
             'external',
             'target',
             'rel',
+            'type',
             'slanted',
             'align',
         ];
@@ -249,6 +251,17 @@ class ButtonComponent extends HTMLElement {
             event.preventDefault();
             event.stopPropagation();
             event.stopImmediatePropagation();
+            return;
+        }
+
+        // If button is type="submit", trigger form submission
+        const type = this.getAttribute('type');
+        if (type === 'submit') {
+            const form = this.closest('form');
+            if (form) {
+                // Use requestSubmit() to trigger validation and submit events
+                form.requestSubmit();
+            }
         }
     }
 
@@ -267,6 +280,7 @@ class ButtonComponent extends HTMLElement {
         const label = this.getAttribute('label') || 'More Info';
         const ariaLabel = this.getAttribute('aria-label');
         const ariaLabelledby = this.getAttribute('aria-labelledby');
+        const type = this.getAttribute('type') || 'button';
 
         const isExternal = this.getAttribute('external') === 'true';
         const target =
@@ -313,7 +327,7 @@ class ButtonComponent extends HTMLElement {
         `;
         } else {
             this.shadowRoot.innerHTML = `
-            <button type="button" class="${variant} ${size}" part="base"
+            <button type="${type}" class="${variant} ${size}" part="base"
                 ${this.hasAttribute('disabled') ? 'disabled' : ''}
                 ${ariaLabel ? `aria-label="${ariaLabel}"` : ''} ${
                     ariaLabelledby ? `aria-labelledby="${ariaLabelledby}"` : ''

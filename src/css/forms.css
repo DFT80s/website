@@ -1,0 +1,111 @@
+/* ========================================== */
+/* Forms stylesheet */
+/* ========================================== */
+
+/* Form */
+.form {
+    display: grid;
+    row-gap: 1rem;
+
+    /* Buttons */
+    x-button {
+        margin-top: 0.8rem;
+    }
+
+    /* Label */
+    label {
+        font-size: var(--fs-sm, 0.875rem);
+    }
+    label:has(+ .input, + .select) {
+        display: block;
+        margin-bottom: 0.3rem;
+    }
+
+    /* Fieldset */
+    fieldset {
+        padding: 1rem;
+        border-radius: clamp(0.8rem, 1.2vw, 1rem);
+        border: 0.0625rem solid var(--grey-clr, #999999);
+        backdrop-filter: blur(0.125rem);
+
+        legend {
+            font-size: var(--fs-std, 1rem);
+            font-weight: var(--fw-semibold, 600);
+            padding-inline: 0.6rem;
+            color: var(--header-clr, #000000);
+        }
+    }
+
+    /* Field groups */
+    .field-group {
+        /* Center group content */
+        &.center {
+            display: grid;
+            justify-content: center;
+        }
+    }
+
+    /* Form grid */
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        .span-all {
+            grid-column: 1 / -1;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .form-grid.col-3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+
+    /* Grouping elements */
+    .group-r {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: max-content;
+        gap: 1rem;
+    }
+
+    .group-h {
+        display: grid;
+        grid-auto-flow: row;
+        gap: 0.6rem;
+    }
+}
+
+/* Required */
+.required {
+    font-size: 0.8em;
+    vertical-align: super;
+    margin-left: 0.1rem;
+}
+
+/* Form-level error message */
+.form-error {
+    display: block;
+    color: var(--error-clr, #ef4444);
+    background-color: color-mix(
+        in srgb,
+        var(--error-clr, #ef4444) 10%,
+        transparent
+    );
+    font-size: var(--fs-sm, 0.875rem);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    border-left: 0.16rem solid var(--error-clr, #ef4444);
+}
+
+.form-error:empty {
+    display: none;
+    padding: 0;
+    margin: 0;
+}

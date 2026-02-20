@@ -54,10 +54,131 @@
                     <p>
                         <strong>Now actively taking bookings for 2026.</strong>
                     </p>
+                    <p>Alternatively, you can reach us directly via the form below:</p>
+                </section>
+                <section class="c-grid narrow sec-pd no-tp-pd">
+                    <form class="form" name="contact" method="POST" data-netlify="true" aria-label="Contact form">
+                        <input type="hidden" name="subject" value="New lead (%{fname}) from %{formName} form on %{siteName}" />
+                        <fieldset>
+                            <legend class="ta-c">Personal Information</legend>
+                            <div class="form-grid">
+                                <div class="field-group">
+                                    <label for="fname">Name<span class="required" aria-hidden="true">*</span></label>
+                                    <input id="fname" type="text" name="fname" class="input" title="Name is required" 
+                                        placeholder="Your name"
+                                        autocomplete="name"
+                                        required
+                                        aria-required="true" />
+                                </div>
+                                <div class="field-group">
+                                    <label for="tel">Telephone</label>
+                                    <input
+                                        id="tel"
+                                        type="tel"
+                                        name="tel"
+                                        class="input"
+                                        title="Enter your telephone number"
+                                        placeholder="Telephone number"
+                                        autocomplete="tel"
+                                    />
+                                </div>
+                                <div class="field-group">
+                                    <label for="email">Email<span class="required" aria-hidden="true">*</span></label>
+                                    <input
+                                        id="email"
+                                        type="email"
+                                        name="email"
+                                        class="input"
+                                        pattern="[^@]+@[^@]+\.[^@]+"
+                                        title="Enter a valid telephone number"
+                                        placeholder="Email address"
+                                        autocomplete="email"
+                                        required
+                                        aria-required="true"
+                                    />
+                                </div>
+                                <div class="field-group">
+                                    <label for="event-type">Event Type</label>
+                                    <div class="select">
+                                        <select id="event-type" name="event-type" title="Please select an event type">
+                                            <option value="" disabled="" selected="">- Please select -</option>
+                                            <option value="pub">Pub</option>
+                                            <option value="club">Club</option>
+                                            <option value="private-party">Private Party</option>
+                                            <option value="wedding">Wedding</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="field-group span-all">
+                                    <label for="message">Message<span class="required" aria-hidden="true">*</span></label>
+                                    <textarea
+                                        id="message"
+                                        name="message"
+                                        class="input"
+                                        title="A message is required"
+                                        placeholder="I would like to enquire about..."
+                                        rows="5"
+                                        required
+                                        aria-required="true"
+                                    ></textarea>
+                                </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend id="contact-method-legend" class="ta-c">Preferred Contact Method<span class="required" aria-hidden="true">*</span></legend>
+                            <div class="field-group center group-r" role="radiogroup" aria-labelledby="contact-method-legend" aria-required="true">
+                                <label class="radio"
+                                    ><input
+                                        type="radio"
+                                        name="contact"
+                                        value="email"
+                                        title="Please select a contact method"
+                                        required
+                                    />
+                                    Email</label
+                                >
+                                <label class="radio"
+                                    ><input
+                                        type="radio"
+                                        name="contact"
+                                        value="phone"
+                                        title="Please select a contact method"
+                                        required
+                                    />
+                                    Phone</label
+                                >
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend class="ta-c">Verification<span class="required" aria-hidden="true">*</span></legend>
+                            <div class="field-group center">
+                                <label class="checkbox human-check">
+                                    <input
+                                        type="checkbox"
+                                        name="human_check"
+                                        value="verified"
+                                        title="Please confirm you are not a robot"
+                                        required
+                                        aria-required="true"
+                                    />
+                                    I am not a robot
+                                </label>
+                            </div>
+                        </fieldset>
+                        <x-button
+                            type="submit"
+                            aria-label="Submit contact form"
+                            pill
+                            align="center"
+                        >
+                            <span slot="label">Send Message</span>
+                        </x-button>
+                    </form>
                 </section>
             </main>
             <x-footer class="c-grid"></x-footer>
         </template>
         <script type="module" src="/main.js"></script>
+        <script type="module" src="/src/js/contact.js"></script>
     </body>
 </html>

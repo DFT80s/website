@@ -34,3 +34,9 @@
 
 /* Import utilities styles into utilities layer */
 @import './src/css/utilities.css' layer(utilities);
+
+/* Import form styles into components layer */
+@import './src/css/forms.css' layer(components);
+
+/* Import input styles into components layer */
+@import './src/css/inputs.css' layer(components);
