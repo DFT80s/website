@@ -6,7 +6,7 @@
 window.pageLoadTime = Date.now();
 
 // Development mode detection
-const isDevelopment = import.meta.env?.VITE_DEVELOPMENT === 'true';
+const isDevelopment = import.meta.env.VITE_ENVIRONMENT === 'development';
 
 // Initialize the app after DOM is loaded
 let initialized = false;
@@ -50,6 +50,7 @@ const setupHoneypots = form => {
         const companyField = document.createElement('input');
         companyField.type = 'hidden';
         companyField.name = 'company';
+        companyField.value = 'please-leave-empty'; // Pre-filled to require interaction clearing
         companyField.autocomplete = 'off';
 
         // Insert after the visible email field
@@ -107,9 +108,9 @@ const clearHoneypots = form => {
     if (nameField) nameField.value = '';
 };
 
-// Set up simple validation error message
+// Set up simple validation error and success messages
 const setupValidationError = form => {
-    // Create a single form-level error message container
+    // Create a single form-level message container
     const submitButton = form.querySelector('x-button[type="submit"]');
     if (!submitButton) return;
 
@@ -124,6 +125,17 @@ const setupValidationError = form => {
         submitButton.parentNode.insertBefore(formError, submitButton);
     }
 
+    // Create success container if it doesn't exist
+    let formSuccess = form.querySelector('.form-success');
+    if (!formSuccess) {
+        formSuccess = document.createElement('div');
+        formSuccess.className = 'form-success';
+        formSuccess.setAttribute('aria-live', 'polite');
+        formSuccess.setAttribute('role', 'status');
+        // Insert before the submit button inside the form
+        submitButton.parentNode.insertBefore(formSuccess, submitButton);
+    }
+
     // Show generic error message when validation fails
     // Note: 'invalid' event fires when HTML5 validation fails (before submit is blocked)
     form.addEventListener(
@@ -131,16 +143,18 @@ const setupValidationError = form => {
         () => {
             formError.textContent =
                 'Please fill out all required fields correctly.';
+            formSuccess.textContent = ''; // Clear success on error
         },
         true, // Use capture phase to catch the event
     );
 
-    // Clear error when user interacts with any field
+    // Clear messages when user interacts with any field
     form.addEventListener('input', () => {
         formError.textContent = '';
+        formSuccess.textContent = '';
     });
 
-    // Clear error on successful submit
+    // Clear error on submit start
     form.addEventListener('submit', () => {
         formError.textContent = '';
     });
@@ -180,6 +194,14 @@ const handleFormSubmit = event => {
         const data = Object.fromEntries(formData.entries());
 
         console.log('📝 Form submitted in development mode:', data);
+
+        // Show success message
+        const formSuccess = form.querySelector('.form-success');
+        if (formSuccess) {
+            formSuccess.textContent =
+                '✅ Development mode: Form data logged to console. Check browser console for details.';
+        }
+
         alert(
             '✅ Development mode: Form data logged to console!\n\nCheck browser console for submitted data.',
         );
@@ -201,12 +223,28 @@ const handleFormSubmit = event => {
         body: new URLSearchParams(formData).toString(),
     })
         .then(() => {
-            console.log('Form successfully submitted');
+            // Show success message
+            const formSuccess = form.querySelector('.form-success');
+            if (formSuccess) {
+                formSuccess.textContent =
+                    "✅ Thank you for your message! We'll get back to you soon.";
+            }
+
             alert("Thank you for your message! We'll get back to you soon.");
             form.reset();
         })
         .catch(error => {
-            console.error('Form submission error:', error);
+            if (isDevelopment) {
+                console.error('Form submission error:', error);
+            }
+
+            // Show error message
+            const formError = form.querySelector('.form-error');
+            if (formError) {
+                formError.textContent =
+                    'Sorry, there was an error sending your message. Please try again.';
+            }
+
             alert(
                 'Sorry, there was an error sending your message. Please try again.',
             );
