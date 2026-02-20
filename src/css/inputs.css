@@ -111,6 +111,7 @@ textarea {
         will-change: border-color;
 
         &:hover {
+            outline: transparent;
             border-color: var(--font-clr, #46556a);
         }
         &:focus-within {
