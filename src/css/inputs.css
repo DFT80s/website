@@ -237,7 +237,7 @@ textarea {
         position: absolute;
         right: 0.0625rem;
         top: 0.0625rem;
-        width: calc(3rem - 0.0625rem);
+        width: calc(4rem - 0.0625rem);
         height: calc(100% - 0.125rem);
         background: var(--white-clr, #fff);
         z-index: 2;
