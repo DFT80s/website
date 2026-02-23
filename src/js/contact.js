@@ -18,6 +18,13 @@ const app = () => {
 
     // Initialize anti-spam protection
     initAntiSpam();
+
+    // Add 'has-value' class to date inputs when they have a value for styling purposes
+    document.querySelectorAll('input[type="date"]').forEach(input => {
+        input.addEventListener('change', () => {
+            input.classList.toggle('has-value', input.value !== '');
+        });
+    });
 };
 
 // Anti-spam protection system

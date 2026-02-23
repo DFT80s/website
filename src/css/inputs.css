@@ -25,9 +25,41 @@
         will-change: color;
         transition: var(--clr-trans, color 0.15s linear);
     }
+
+    /* Date inputs - don't use ::placeholder, so target the value */
+    &[type='date'] {
+        cursor: pointer;
+        color: color-mix(
+            in oklch,
+            var(--grey-clr, #999999),
+            var(--black-clr) 30%
+        );
+
+        &:focus {
+            color: var(--header-clr, #000000);
+        }
+
+        &.has-value {
+            color: var(--header-clr, #000000);
+        }
+
+        /* Style the calendar icon */
+        &::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.15s linear;
+        }
+
+        &:hover::-webkit-calendar-picker-indicator,
+        &:focus::-webkit-calendar-picker-indicator {
+            opacity: 1;
+        }
+    }
+
     &:hover {
         outline-color: transparent;
     }
+
     &:focus-visible {
         border-color: var(--primary-clr, #1cade8);
     }
