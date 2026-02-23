@@ -46,12 +46,20 @@
         &::-webkit-calendar-picker-indicator {
             cursor: pointer;
             opacity: 0.4;
-            transition: opacity 0.15s linear;
+            color: color-mix(
+                in oklch,
+                var(--grey-clr, #999999),
+                var(--black-clr) 20%
+            );
+            transition:
+                opacity 0.15s linear,
+                var(--clr-trans, color 0.15s ease-in-out);
         }
 
         &:hover::-webkit-calendar-picker-indicator,
         &:focus::-webkit-calendar-picker-indicator {
             opacity: 1;
+            color: var(--primary-clr, #1cade8);
         }
     }
 
