@@ -18,9 +18,7 @@ html {
 body {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    height: 100dvh;
-    overscroll-behavior-y: none;
+    min-height: 100svh;
     width: 100%;
     overflow-x: clip;
     background-color: var(--light-clr);
