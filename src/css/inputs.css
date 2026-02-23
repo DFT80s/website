@@ -51,7 +51,7 @@
             bottom: 0;
             right: 0;
             height: 100%;
-            width: 2.5rem;
+            width: 3rem;
             cursor: pointer;
         }
         &::-moz-calendar-picker-indicator {
@@ -61,7 +61,7 @@
             bottom: 0;
             right: 0;
             height: 100%;
-            width: 2.5rem;
+            width: 3rem;
             cursor: pointer;
         }
     }
@@ -229,11 +229,26 @@ textarea {
         width: 100%;
         padding-right: 2.5rem;
         cursor: pointer;
+        z-index: 1;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        right: 0.0625rem;
+        top: 0.0625rem;
+        width: calc(3rem - 0.0625rem);
+        height: calc(100% - 0.125rem);
+        background: var(--white-clr, #fff);
+        z-index: 2;
+        pointer-events: none;
+        border-radius: 0 0.5rem 0.5rem 0;
     }
 
     &::after {
         content: '';
         position: absolute;
+        z-index: 3;
         right: 1rem;
         top: 50%;
         transform: translateY(-50%);
