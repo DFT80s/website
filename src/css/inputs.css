@@ -28,6 +28,7 @@
 
     /* Date inputs - don't use ::placeholder, so target the value */
     &[type='date'] {
+        position: relative;
         color: color-mix(
             in oklch,
             var(--grey-clr, #999999),
@@ -42,24 +43,26 @@
             color: var(--header-clr, #000000);
         }
 
-        /* Style the calendar icon */
+        /* Hide calendar icon visually but keep it clickable to trigger picker */
         &::-webkit-calendar-picker-indicator {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            height: 100%;
+            width: 2.5rem;
             cursor: pointer;
-            opacity: 0.4;
-            color: color-mix(
-                in oklch,
-                var(--grey-clr, #999999),
-                var(--black-clr) 20%
-            );
-            transition:
-                opacity 0.15s linear,
-                var(--clr-trans, color 0.15s ease-in-out);
         }
-
-        &:hover::-webkit-calendar-picker-indicator,
-        &:focus::-webkit-calendar-picker-indicator {
-            opacity: 1;
-            color: var(--primary-clr, #1cade8);
+        &::-moz-calendar-picker-indicator {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            height: 100%;
+            width: 2.5rem;
+            cursor: pointer;
         }
     }
 
@@ -213,6 +216,42 @@ textarea {
         &::after {
             border-top-color: var(--primary-clr, #1cade8);
         }
+    }
+}
+
+/* Date Input Wrapper */
+.date {
+    width: max(300px, 100%);
+    position: relative;
+    cursor: pointer;
+
+    input[type='date'] {
+        width: 100%;
+        padding-right: 2.5rem;
+        cursor: pointer;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.2rem;
+        height: 1.2rem;
+        pointer-events: none;
+        transition: var(--bg-clr-trans, background-color 0.15s ease-in-out);
+
+        background-color: var(--grey-clr, #999999);
+        mask-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Cpath d="M8 2v4"/%3E%3Cpath d="M16 2v4"/%3E%3Crect width="18" height="18" x="3" y="4" rx="2"/%3E%3Cpath d="M3 10h18"/%3E%3Cpath d="M8 14h.01"/%3E%3Cpath d="M12 14h.01"/%3E%3Cpath d="M16 14h.01"/%3E%3Cpath d="M8 18h.01"/%3E%3Cpath d="M12 18h.01"/%3E%3Cpath d="M16 18h.01"/%3E%3C/svg%3E');
+        mask-size: contain;
+        mask-repeat: no-repeat;
+        mask-position: center;
+    }
+
+    &:hover::after,
+    &:focus-within::after {
+        background-color: var(--primary-clr, #1cade8);
     }
 }
 
