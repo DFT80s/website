@@ -112,6 +112,10 @@ componentStyles.replaceSync(`
         background-color: var(--fill-clr);
         border: 0.125rem var(--fill-clr) solid;
         box-shadow: var(--button-shadow, none);
+
+        &:hover {
+            color: inherit;
+        }
     }
 
     svg {
@@ -173,6 +177,10 @@ componentStyles.replaceSync(`
     .white {
         --fill-clr: var(--white-clr-fxd, #ffffff);
         color: var(--black-clr-fxd);
+        
+        &:hover {
+            color: var(--black-clr-fxd);
+        }
     }
 
     .outline {
@@ -181,6 +189,7 @@ componentStyles.replaceSync(`
 
         &:hover, &:active {
             background-color: transparent;
+            color: var(--fill-clr);
         }
 
         &:active {

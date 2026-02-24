@@ -132,7 +132,7 @@ strong {
 }
 
 /* Link styles */
-a:not(:where(x-button a)) {
+a {
     color: var(--primary-clr);
     text-decoration: none;
     font-weight: var(--fw-medium);
