@@ -132,14 +132,16 @@ strong {
 }
 
 /* Link styles */
-a {
+a:not(:where(x-button a)) {
     color: var(--primary-clr);
     text-decoration: none;
     font-weight: var(--fw-medium);
 }
 
 .txt-flw {
-    a:not(:has(> img)):not(h1 a, h2 a, h3 a, h4 a, h5 a, h6 a):not(x-button) {
+    a:not(:has(> img)):not(
+            :where(h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, x-button a)
+        ) {
         color: var(--primary-clr);
         text-decoration: transparent solid underline 0.07rem;
         text-underline-offset: 0em;
