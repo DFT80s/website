@@ -34,6 +34,10 @@
     --grey-clr-fxd: oklch(80% 0.04 257);
     --light-clr: light-dark(oklch(95% 0.01 256), oklch(23% 0 271));
     --light-clr-fxd: oklch(95% 0.01 256);
+    --bg-clr: light-dark(
+        oklch(97.295% 0.00298 264.794),
+        oklch(16.376% 0.00002 271.152)
+    );
 
     --error-clr: light-dark(oklch(46% 0.2 28), oklch(65% 0.2 25));
     --warning-clr: light-dark(oklch(60% 0.12 75), oklch(90% 0.16 75));

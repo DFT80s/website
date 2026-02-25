@@ -31,7 +31,11 @@ div:has(> .media-cover) {
     }
 }
 
-/* Layout */
+/* Colours */
+.bg-clr-lght {
+    background-color: var(--bg-clr);
+}
+
 /* Layout */
 @media (max-width: 767px) {
     .order-mobile-1 {
