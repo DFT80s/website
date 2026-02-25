@@ -1,0 +1,24 @@
+/* ========================================== */
+/* Image Component stylesheet */
+/* Styles the image component ./image.js */
+/* ========================================== */
+
+x-image {
+    width: 100%;
+
+    picture,
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: var(--img-ar);
+        object-fit: cover;
+    }
+
+    @media (max-width: 767px) {
+        picture,
+        img {
+            aspect-ratio: var(--img-ar-mobile);
+        }
+    }
+}

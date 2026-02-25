@@ -33,7 +33,7 @@
  ** <x-image
  **   src="social.jpg"
  **   width="1792"
- **   height="1008"
+ **   height="1108"
  **   alt="Local image optimized by Cloudinary"
  ** ></x-image>
  **
@@ -54,8 +54,11 @@
  ** - loading: "lazy" (default) or "eager"
  ** - fetchpriority: "auto" (default), "high", or "low"
  ** - decoding: "async" (default), "sync", or "auto"
- ** - ar: "true" disables mobile aspect ratio transformation
+ ** - ar: "true" preserves the original aspect ratio on mobile (default crops to 0.9 portrait ratio)
  */
+
+/* Import stylesheets */
+import './image.css';
 
 class ImageComponent extends HTMLElement {
     // Observe attributes
@@ -115,18 +118,15 @@ class ImageComponent extends HTMLElement {
     }
 
     // Helper to build a Cloudinary URL for direct uploads
-    cloudinaryUrl(user, width, filename) {
-        return `https://res.cloudinary.com/${user}/image/upload/w_${width}/q_auto/f_auto/${filename}`;
+    cloudinaryUrl(user, width, filename, aspect = null) {
+        const ar = aspect ? `,ar_${aspect},c_fill` : '';
+        return `https://res.cloudinary.com/${user}/image/upload/w_${width}${ar},q_70,f_webp/${filename}`;
     }
 
     // Helper to build a Cloudinary fetch URL for external images
-    cloudinaryFetchUrl(user, width, sourceUrl) {
-        return `https://res.cloudinary.com/${user}/image/fetch/w_${width},f_auto,q_auto/${sourceUrl}`;
-    }
-
-    // Helper to insert aspect ratio transformation for Cloudinary URLs
-    withAspectRatio(url, aspect) {
-        return url.replace(/\/upload\//, `/upload/ar_${aspect},c_fill/`);
+    cloudinaryFetchUrl(user, width, sourceUrl, aspect = null) {
+        const ar = aspect ? `,ar_${aspect},c_fill` : '';
+        return `https://res.cloudinary.com/${user}/image/fetch/w_${width}${ar},q_70,f_webp/${sourceUrl}`;
     }
 
     // Render the <picture> element with responsive srcset and sizes
@@ -142,6 +142,7 @@ class ImageComponent extends HTMLElement {
         const fetchpriority = this.getAttribute('fetchpriority') || 'auto';
         const decoding = this.getAttribute('decoding') || 'async';
         const ar = this.getAttribute('ar') === 'true';
+        const mobileAspect = ar ? null : '0.9';
 
         // Determine rendering mode based on env variable and attributes
         const hasCloudinary = !!cloudinaryUser;
@@ -152,8 +153,8 @@ class ImageComponent extends HTMLElement {
             hasCloudinary && src && (isExternalUrl || !!imageUrlBase);
 
         const isDirectUpload = hasCloudinary && filename && !src;
-        const isFetch = shouldUseFetch;
         const isFallbackOnly = src && !shouldUseFetch;
+        const ariaHidden = alt === '' ? 'aria-hidden="true"' : '';
 
         let pictureHTML = '';
 
@@ -164,38 +165,8 @@ class ImageComponent extends HTMLElement {
                     <source
                         media="(max-width: 767px)"
                         srcset="
-                            ${
-                                ar
-                                    ? this.cloudinaryUrl(
-                                          cloudinaryUser,
-                                          640,
-                                          filename,
-                                      )
-                                    : this.withAspectRatio(
-                                          this.cloudinaryUrl(
-                                              cloudinaryUser,
-                                              640,
-                                              filename,
-                                          ),
-                                          '0.9',
-                                      )
-                            } 640w,
-                            ${
-                                ar
-                                    ? this.cloudinaryUrl(
-                                          cloudinaryUser,
-                                          768,
-                                          filename,
-                                      )
-                                    : this.withAspectRatio(
-                                          this.cloudinaryUrl(
-                                              cloudinaryUser,
-                                              768,
-                                              filename,
-                                          ),
-                                          '0.9',
-                                      )
-                            } 768w
+                            ${this.cloudinaryUrl(cloudinaryUser, 640, filename, mobileAspect)} 640w,
+                            ${this.cloudinaryUrl(cloudinaryUser, 768, filename, mobileAspect)} 768w
                         "
                         sizes="100vw"
                     >
@@ -213,6 +184,7 @@ class ImageComponent extends HTMLElement {
                         width="${width}"
                         height="${height}"
                         alt="${alt}"
+                        ${ariaHidden}
                         loading="${loading}"
                         fetchpriority="${fetchpriority}"
                         decoding="${decoding}"
@@ -220,7 +192,7 @@ class ImageComponent extends HTMLElement {
                     />
                 </picture>
             `;
-        } else if (isFetch) {
+        } else if (shouldUseFetch) {
             // Mode 2: Cloudinary fetch with fallback to original URL
             // For local paths, prepend VITE_IMAGE_URL_BASE to create a full URL
             let fullSrc = src;
@@ -241,8 +213,8 @@ class ImageComponent extends HTMLElement {
                     <source
                         media="(max-width: 767px)"
                         srcset="
-                            ${this.cloudinaryFetchUrl(cloudinaryUser, 640, fullSrc)} 640w,
-                            ${this.cloudinaryFetchUrl(cloudinaryUser, 768, fullSrc)} 768w
+                            ${this.cloudinaryFetchUrl(cloudinaryUser, 640, fullSrc, mobileAspect)} 640w,
+                            ${this.cloudinaryFetchUrl(cloudinaryUser, 768, fullSrc, mobileAspect)} 768w
                         "
                         sizes="100vw"
                     >
@@ -261,6 +233,7 @@ class ImageComponent extends HTMLElement {
                         width="${width}"
                         height="${height}"
                         alt="${alt}"
+                        ${ariaHidden}
                         loading="${loading}"
                         fetchpriority="${fetchpriority}"
                         decoding="${decoding}"
@@ -280,18 +253,27 @@ class ImageComponent extends HTMLElement {
                     width="${width}"
                     height="${height}"
                     alt="${alt}"
+                    ${ariaHidden}
                     loading="${loading}"
                     fetchpriority="${fetchpriority}"
                     decoding="${decoding}"
                     draggable="false"
                 />
-    `;
+            `;
         }
 
         this.innerHTML = pictureHTML;
 
+        // Set CSS custom properties for aspect ratio and max-width on host element
+        this.style.setProperty('--img-ar', `${width} / ${height}`);
+        this.style.setProperty(
+            '--img-ar-mobile',
+            ar ? `${width} / ${height}` : '0.9 / 1',
+        );
+        this.style.setProperty('max-width', `${width}px`);
+
         // Attach error handler for fallback (only in fetch mode)
-        if (isFetch) {
+        if (shouldUseFetch) {
             // Remove old listener if exists
             if (this.currentImg) {
                 this.currentImg.removeEventListener('error', this.errorHandler);
