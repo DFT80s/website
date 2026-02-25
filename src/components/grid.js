@@ -107,6 +107,18 @@ componentStyles.replaceSync(`
         .grid > .col-span-3 { grid-column: span 3; }
         .grid > .col-span-4 { grid-column: span 4; }
     }
+
+    /* Mobile order — change grid item order on mobile (max 767px) */
+    @media (max-width: 767px) {
+        ::slotted(.order-mob-1) { order: 1; }
+        ::slotted(.order-mob-2) { order: 2; }
+        ::slotted(.order-mob-3) { order: 3; }
+        ::slotted(.order-mob-4) { order: 4; }
+        ::slotted(.order-mob-5) { order: 5; }
+        ::slotted(.order-mob-6) { order: 6; }
+        ::slotted(.order-mob-frst) { order: -1; }
+        ::slotted(.order-mob-lst)  { order: 999; }
+    }
 `);
 
 class GridComponent extends HTMLElement {
