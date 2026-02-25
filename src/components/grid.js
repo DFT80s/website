@@ -24,7 +24,8 @@
  ** - columns: Number of columns (1-4)
  ** - gap: Gap size ('small', 'medium', 'large') or custom CSS value
  ** - align-items: Vertical alignment (start, center, end, stretch)
- ** - justify-content: Horizontal alignment (start, center, end, space-between, space-around)
+ ** - justify-content: Horizontal alignment of tracks (start, center, end, space-between, space-around)
+ ** - justify-items: Horizontal alignment of items (start, center, end, stretch)
  ** - min-col-width: Minimum column width for auto-fit mode (e.g., '250px')
  ** - auto-fit: Enable auto-fit responsive mode (no value needed)
  */
@@ -42,6 +43,7 @@ componentStyles.replaceSync(`
         --gap-large: 4rem;
         --align-items: stretch;
         --justify-content: start;
+        --justify-items: start;
     }
 
     .grid {
@@ -49,6 +51,7 @@ componentStyles.replaceSync(`
         gap: var(--grid-gap, var(--gap));
         align-items: var(--align-items);
         justify-content: var(--justify-content);
+        justify-items: var(--justify-items);
     }
 
     @media (min-width: 768px) {
@@ -114,6 +117,7 @@ class GridComponent extends HTMLElement {
             'gap',
             'align-items',
             'justify-content',
+            'justify-items',
             'min-col-width',
             'auto-fit',
         ];
@@ -158,11 +162,14 @@ class GridComponent extends HTMLElement {
             'space-between',
             'space-around',
         ];
+        const justifyItemsOptions = ['start', 'center', 'end', 'stretch'];
 
         if (type === 'align-items') {
             return alignOptions.includes(value) ? value : 'stretch';
         } else if (type === 'justify-content') {
             return justifyOptions.includes(value) ? value : 'start';
+        } else if (type === 'justify-items') {
+            return justifyItemsOptions.includes(value) ? value : 'start';
         }
         return value;
     }
@@ -173,6 +180,7 @@ class GridComponent extends HTMLElement {
         const gap = this.getAttribute('gap');
         const alignItems = this.getAttribute('align-items');
         const justifyContent = this.getAttribute('justify-content');
+        const justifyItems = this.getAttribute('justify-items');
         const minColWidth = this.getAttribute('min-col-width');
         const autoFit = this.hasAttribute('auto-fit');
 
@@ -224,6 +232,15 @@ class GridComponent extends HTMLElement {
                 'justify-content',
             );
             gridEl.style.setProperty('--justify-content', validJustify);
+        }
+
+        // Apply justify items styles
+        if (justifyItems) {
+            const validJustifyItems = this.validateAlignment(
+                justifyItems,
+                'justify-items',
+            );
+            gridEl.style.setProperty('--justify-items', validJustifyItems);
         }
 
         // Apply min column width for auto-fit

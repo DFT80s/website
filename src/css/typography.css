@@ -121,6 +121,18 @@ strong {
     text-align: right;
 }
 
+.icn-txt {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 1ch;
+    x-icon {
+        flex-shrink: 0;
+    }
+    + p {
+        margin-top: 0.5rem;
+    }
+}
+
 .grad-txt.ta-c,
 .ta-c .grad-txt {
     margin-inline: auto;
