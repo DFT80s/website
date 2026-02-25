@@ -1,5 +1,5 @@
 /*
- ** Responsive Image Component with Cloudinary
+ ** Image Component with optional Cloudinary optimisation
  **
  ** Supports 3 modes based on environment variables and attributes:
  ** 1. Direct Cloudinary upload (filename attribute)
