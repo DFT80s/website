@@ -155,10 +155,8 @@ x-blog-list {
     }
 }
 
-[data-theme='dark'] {
+:host-context([data-theme='dark']) {
     .category-filter {
-        background-color: var(--white-clr, #000000);
-
         a:not(.active) {
             border-color: var(--grey-clr, #999999);
 
