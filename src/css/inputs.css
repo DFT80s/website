@@ -4,7 +4,7 @@
 
 /* Inputs */
 .input {
-    width: max(300px, 100%);
+    width: 100%;
     margin: 0;
     padding: 0.4rem 1rem;
     font-size: var(--fs-std, 1rem);
@@ -136,7 +136,7 @@ textarea {
 
 /* Select */
 .select {
-    width: max(300px, 100%);
+    width: 100%;
     position: relative;
 
     select {
@@ -221,7 +221,7 @@ textarea {
 
 /* Date Input Wrapper */
 .date {
-    width: max(300px, 100%);
+    width: 100%;
     position: relative;
     cursor: pointer;
 
