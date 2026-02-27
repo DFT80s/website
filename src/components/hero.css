@@ -1,0 +1,48 @@
+/* ========================================== */
+/* Hero Component stylesheet */
+/* Styles the hero component ./hero.js */
+/* ========================================== */
+
+x-hero {
+    display: grid;
+    align-content: var(--hero-align-v, center);
+    position: relative;
+    overflow: clip;
+    min-height: var(--hero-min-height, 40rem);
+    height: var(--hero-height, auto);
+
+    /* Background media */
+    > [slot='background'] {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        max-width: none !important; /* Override any max-width from x-image/x-video */
+        z-index: 0;
+        filter: brightness(var(--hero-brightness, 0.7));
+
+        picture,
+        img,
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    /* Content wrapper — positioned above background */
+    > .hero-content {
+        position: relative;
+        z-index: 1;
+        justify-items: var(--hero-align-h, start);
+        text-align: var(--hero-text-align, left);
+    }
+
+    @media (min-width: 768px) {
+        padding-block: 4rem;
+    }
+
+    @media (min-width: 1024px) {
+        padding-block: 5rem;
+    }
+}

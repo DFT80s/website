@@ -2,7 +2,13 @@
  ** Blog List Component
  ** Displays a list of blog posts from WordPress
  ** Usage:
- ** <x-blog-list count="5"></x-blog-list>
+ ** <x-blog-list count="5" hide-button></x-blog-list>
+ **
+ ** Attributes:
+ ** - count: Number of posts to display initially (default: 6)
+ ** - category: Category ID to filter posts by
+ ** - show-categories: Show category filter links
+ ** - hide-button: Hide the "Load More Posts" button
  */
 
 // Import API functions
@@ -41,7 +47,7 @@ componentStyles.replaceSync(css);
 class BlogListComponent extends HTMLElement {
     // Observe attributes
     static get observedAttributes() {
-        return ['count', 'category', 'show-categories'];
+        return ['count', 'category', 'show-categories', 'hide-button'];
     }
 
     // Called when component is created
@@ -55,6 +61,7 @@ class BlogListComponent extends HTMLElement {
         this.category = null; // Category ID for filtering
         this.categorySlug = null; // Category slug for matching active state
         this.showCategories = false; // Whether to show category links
+        this.hideButton = false; // Whether to hide the load more button
 
         // Bind event handlers
         this.clickHandler = e => {
@@ -138,7 +145,7 @@ class BlogListComponent extends HTMLElement {
                 if (descEl)
                     descEl.textContent =
                         matchedCategory.description ||
-                        `Browse articles in ${matchedCategory.name}`;
+                        `Browse articles in ${matchedCategory.name}.`;
             }
         }
 
@@ -176,6 +183,14 @@ class BlogListComponent extends HTMLElement {
             } else {
                 this.render();
             }
+        }
+        if (
+            name === 'hide-button' &&
+            oldValue !== newValue &&
+            this.isConnected
+        ) {
+            this.hideButton = newValue !== null;
+            this.render();
         }
     }
 
@@ -368,7 +383,7 @@ class BlogListComponent extends HTMLElement {
                 ${postsHTML}
             </x-grid>
             ${
-                hasMoreToShow
+                hasMoreToShow && !this.hideButton
                     ? `<div class="pagination">
                 <x-button data-load-more${
                     this.isLoading ? ' disabled' : ''
