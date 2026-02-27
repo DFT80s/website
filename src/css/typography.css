@@ -151,7 +151,7 @@ a {
 }
 
 .txt-flw {
-    a:not(:has(> img)):not(
+    a:not(:has(img)):not(
             :where(h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, x-button a)
         ) {
         color: var(--primary-clr);
