@@ -87,6 +87,18 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Cache images — long-lived but not immutable (no content hash in filename)
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000, stale-while-revalidate=86400"
+
+# Cache videos — long-lived but not immutable (no content hash in filename)
+[[headers]]
+  for = "/videos/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000, stale-while-revalidate=86400"
+
 [[headers]]
   for = "/*.js"
   [headers.values]
