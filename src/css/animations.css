@@ -16,7 +16,8 @@
     @supports (animation-range: cover) and (animation-timeline: view()) {
         section:has(> .parallax-bg),
         article:has(> .parallax-bg),
-        div:has(> .parallax-bg) {
+        div:has(> .parallax-bg),
+        x-hero:has(> .parallax-bg) {
             overflow: clip;
             position: relative;
 

@@ -1,0 +1,73 @@
+/* ========================================== */
+/* Logo Flex Component stylesheet */
+/* Styles the logo flex component ./logo-flex.js */
+/* ========================================== */
+
+x-logo-flex {
+    display: grid;
+    /* Flex-like wrapping: columns auto-wrap at min-width */
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(var(--logo-flex-min-width, 160px), 1fr)
+    );
+    column-gap: var(--logo-flex-gap, 2rem);
+    row-gap: calc(var(--logo-flex-gap, 2rem) / 2);
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    width: 100%;
+
+    /* Direct x-image logos */
+    > x-image {
+        width: 100%;
+        max-height: var(--logo-flex-max-height, 64px);
+        object-fit: contain;
+        filter: grayscale(1);
+        opacity: 0.5;
+        will-change: opacity;
+        transition: var(--opcty-trans);
+    }
+
+    /* Logos wrapped in a link */
+    > a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        filter: grayscale(1);
+        opacity: 0.5;
+        will-change: opacity;
+        transition: var(--opcty-trans);
+
+        &:hover {
+            opacity: 1;
+        }
+
+        x-image {
+            width: 100%;
+            max-height: var(--logo-flex-max-height, 64px);
+            object-fit: contain;
+        }
+    }
+
+    @media (max-width: 767px) {
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(var(--logo-flex-min-width-mobile, 120px), 1fr)
+        );
+        column-gap: 1.5rem;
+        row-gap: 1.5rem;
+    }
+}
+
+[data-theme='dark'] {
+    x-logo-flex {
+        > x-image {
+            filter: grayscale(1) invert(1);
+        }
+
+        > a {
+            filter: grayscale(1) invert(1);
+        }
+    }
+}
