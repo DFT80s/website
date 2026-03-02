@@ -11,18 +11,15 @@ x-header {
     margin-inline: auto;
     background-color: var(--white-clr);
     border-bottom: 0.0625rem solid var(--light-clr);
+    overflow-x: clip;
 }
 
 header {
     grid-column: breakout;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    display: grid;
+    grid-template-columns: auto auto;
     align-items: center;
     justify-content: space-between;
-    > * {
-        flex-shrink: 0;
-    }
 }
 
 .header-left {
