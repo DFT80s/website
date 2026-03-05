@@ -2,34 +2,30 @@
  ** Primary Nav Component
  ** Displays the primary navigation menu
  ** Usage:
- ** <x-primary-nav></x-primary-nav>
+ ** <x-primary-nav>
+ **   <nav class="site-nav" aria-label="Primary">...</nav>
+ ** </x-primary-nav>
+ **
+ ** The <nav> is provided as Light DOM content for SEO discoverability.
+ ** The component attaches behaviour and injects component styles.
  */
 
 // Import nested components
 import './icon.js';
 
-// Import stylesheets
-import resetCss from '../css/reset.css?inline';
-import typographyCss from '../css/typography.css?inline';
-import eventsCss from '../css/events.css?inline';
+// Import component stylesheet
 import css from './primary-nav.css?inline';
 
-// Prepare stylesheets
-const resetStyles = new CSSStyleSheet();
-resetStyles.replaceSync(resetCss);
-
-const typographyStyles = new CSSStyleSheet();
-typographyStyles.replaceSync(typographyCss);
-
-const eventsStyles = new CSSStyleSheet();
-eventsStyles.replaceSync(eventsCss);
-
-const componentStyles = new CSSStyleSheet();
-componentStyles.replaceSync(css);
+// Inject component styles into the document head once
+if (!document.querySelector('#primary-nav-styles')) {
+    const style = document.createElement('style');
+    style.id = 'primary-nav-styles';
+    style.textContent = css;
+    document.head.appendChild(style);
+}
 
 class PrimaryNavComponent extends HTMLElement {
     // Private fields
-    #menuItems = null;
     #initialized = false;
     #boundHandleDocumentClick = null;
     #boundHandleDocumentKeydown = null;
@@ -38,7 +34,6 @@ class PrimaryNavComponent extends HTMLElement {
     // Called when component is created
     constructor() {
         super();
-        this.attachShadow({ mode: 'open' });
         // Bind event handlers once in constructor
         this.#boundHandleDocumentClick = this.#handleDocumentClick.bind(this);
         this.#boundHandleDocumentKeydown =
@@ -46,22 +41,13 @@ class PrimaryNavComponent extends HTMLElement {
         this.#boundHandleResize = this.#handleResize.bind(this);
     }
 
-    // Property setter
-    set menuItems(items) {
-        this.#menuItems = items;
-        if (this.isConnected) {
-            this.render();
-        }
-    }
-
-    // Property getter
-    get menuItems() {
-        return this.#menuItems || this.getDefaultMenu();
-    }
-
     // Called when component is added to the DOM
     connectedCallback() {
-        this.render();
+        // Mark the current page link
+        this.#markCurrentPage();
+
+        // Initialise menu behaviour
+        this.initializeMenu();
 
         // Add document listeners only once
         if (!this.#initialized) {
@@ -87,101 +73,27 @@ class PrimaryNavComponent extends HTMLElement {
         this.#initialized = false;
     }
 
-    // Default menu items
-    getDefaultMenu() {
-        return [
-            { label: 'Home', url: '/' },
-            { label: 'About', url: '/about' },
-            { label: 'Contact', url: '/contact' },
-        ];
-    }
-
-    // Helper to recursively render menu items
-    renderMenu(items, currentPath) {
-        return items
-            .map(item => {
-                // Exact match or prefix match for section pages (blog/slug, projects/slug, etc)
-                const isCurrent =
-                    item.url === currentPath ||
-                    currentPath.startsWith(item.url + '/');
-                const hasChildren =
-                    Array.isArray(item.children) && item.children.length > 0;
-                return `
-                    <li${hasChildren ? ' class="has-children"' : ''}>
-                        <a href="${item.url}"${
-                            isCurrent ? ' aria-current="page"' : ''
-                        }>${item.label}</a>
-                        ${
-                            hasChildren
-                                ? `<ul class="nav-sublist">${this.renderMenu(
-                                      item.children,
-                                      currentPath,
-                                  )}</ul>`
-                                : ''
-                        }
-                    </li>
-                `;
-            })
-            .join('');
-    }
-
-    // Render the component
-    render() {
+    // Mark the current page link based on the URL
+    #markCurrentPage() {
         const currentPath = window.location.pathname;
-        const menuHTML = this.renderMenu(this.menuItems, currentPath);
-
-        this.shadowRoot.adoptedStyleSheets = [
-            resetStyles,
-            typographyStyles,
-            eventsStyles,
-            componentStyles,
-        ];
-
-        this.shadowRoot.innerHTML = `
-            <nav class="site-nav" aria-label="Primary">
-                <button class="menu-toggle" aria-label="Toggle menu button" aria-controls="primary-nav-list" aria-expanded="false">
-                    <svg
-                        class="hamburger"
-                        viewBox="0 0 50 50"
-                        width="40"
-                        xml:space="preserve"
-                    >
-                        <path
-                            class="line"
-                            d="M11.6,16.96h32.16c2.96,0,5.36,2.4,5.36,5.36s-2.4,5.36-5.36,5.36H11.6c-5.92,0-10.72-4.8-10.72-10.72S5.68,6.24,11.6,6.24h16.08v37.52"
-                            fill="none"
-                            stroke="var(--white-clr, #ffffff)"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="3"
-                        />
-                    </svg>
-                </button>
-
-                <ul id="primary-nav-list" class="nav-list">
-                    ${menuHTML}
-                    <li class="social-icons">
-                        <a href="https://www.facebook.com/share/1FAswXcV69/" aria-label="Meta" target="_blank" rel="noopener noreferrer">
-                            <x-icon name="meta" size="20"></x-icon>
-                        </a>
-                        <!--<a href="https://x.com/dft80s" aria-label="X" target="_blank" rel="noopener noreferrer">
-                            <x-icon name="x" size="16"></x-icon>
-                        </a>-->
-                    </li>
-                </ul>
-
-                <div class="drawer-overlay" aria-hidden="true"></div>
-            </nav>
-        `;
-
-        this.initializeMenu();
+        this.querySelectorAll('a[href]').forEach(link => {
+            const href = link.getAttribute('href');
+            const isCurrent =
+                href === currentPath ||
+                (href !== '/' && currentPath.startsWith(href + '/'));
+            if (isCurrent) {
+                link.setAttribute('aria-current', 'page');
+            } else {
+                link.removeAttribute('aria-current');
+            }
+        });
     }
 
     // Initialize menu functionality
     initializeMenu() {
-        const toggleBtn = this.shadowRoot.querySelector('.menu-toggle');
-        const navList = this.shadowRoot.querySelector('.nav-list');
-        const overlay = this.shadowRoot.querySelector('.drawer-overlay');
+        const toggleBtn = this.querySelector('.menu-toggle');
+        const navList = this.querySelector('.nav-list');
+        const overlay = this.querySelector('.drawer-overlay');
 
         const closeMenu = () => {
             navList.classList.remove('is-open');
@@ -257,8 +169,8 @@ class PrimaryNavComponent extends HTMLElement {
 
     // Handle document clicks to close menus
     #handleDocumentClick(e) {
-        const navList = this.shadowRoot.querySelector('.nav-list');
-        const toggleBtn = this.shadowRoot.querySelector('.menu-toggle');
+        const navList = this.querySelector('.nav-list');
+        const toggleBtn = this.querySelector('.menu-toggle');
 
         // Check if click originates inside the component shadow DOM
         // With Shadow DOM, 'this' refers to the host element
@@ -297,8 +209,8 @@ class PrimaryNavComponent extends HTMLElement {
 
     // Handle Escape key to close menu
     #handleDocumentKeydown(e) {
-        const navList = this.shadowRoot.querySelector('.nav-list');
-        const toggleBtn = this.shadowRoot.querySelector('.menu-toggle');
+        const navList = this.querySelector('.nav-list');
+        const toggleBtn = this.querySelector('.menu-toggle');
 
         if (e.key === 'Escape' && navList?.classList.contains('is-open')) {
             navList.classList.remove('is-open');
@@ -315,8 +227,8 @@ class PrimaryNavComponent extends HTMLElement {
 
     // Responsive handling
     #handleResize() {
-        const toggleBtn = this.shadowRoot.querySelector('.menu-toggle');
-        const navList = this.shadowRoot.querySelector('.nav-list');
+        const toggleBtn = this.querySelector('.menu-toggle');
+        const navList = this.querySelector('.nav-list');
         if (toggleBtn && navList) {
             const isVisible =
                 window.getComputedStyle(toggleBtn).display !== 'none';

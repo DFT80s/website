@@ -35,17 +35,6 @@ const app = () => {
         // Remove template after use
         template.remove();
     }
-
-    // Set menu items
-    const nav = document.querySelector('x-primary-nav');
-    if (nav) {
-        nav.menuItems = [
-            { label: 'Home', url: '/' },
-            { label: 'About', url: '/about' },
-            { label: 'Media', url: '/media' },
-            { label: 'Contact', url: '/contact-us' },
-        ];
-    }
 };
 
 document.addEventListener('DOMContentLoaded', app);
