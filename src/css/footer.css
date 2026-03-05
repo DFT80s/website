@@ -19,7 +19,9 @@ footer {
         'left right'
         'bottom bottom';
     column-gap: 1rem;
-    row-gap: 0.8rem;
+    &:has(.footer-bottom) {
+        row-gap: 0.8rem;
+    }
 }
 
 .footer-left {
