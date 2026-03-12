@@ -68,7 +68,12 @@ class ObscuredEmailComponent extends HTMLElement {
 
         const email = `${user}@${domain}`;
 
-        this.shadowRoot.innerHTML = `<a href="mailto:${email}" part="link" aria-label="Email ${user} at ${domain}">${iconHTML}${user}<span class="at">@</span>${domain}</a>`;
+        // Render text reversed in the DOM, then use CSS unicode-bidi + direction:rtl
+        // to flip it visually. Bots reading raw DOM text see a reversed string;
+        // humans see the correct address.
+        const rev = s => s.split('').reverse().join('');
+
+        this.shadowRoot.innerHTML = `<a href="mailto:${email}" part="link" aria-label="Email ${user} at ${domain}" style="unicode-bidi:bidi-override;direction:rtl;">${rev(domain)}<span class="at" aria-hidden="true">@</span>${rev(user)}${iconHTML}</a>`;
     }
 }
 
